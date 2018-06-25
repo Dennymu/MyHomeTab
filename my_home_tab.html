@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <title>New Tab</title>
+</head>
+
+<body>
+  <img class="body-image" alt="Background image" src="" />
+  <div class="header z-depth-3">
+    <span class="header-weather"></span>
+    <div class="header-right">
+      <span class="header-date">Wednesday, March 3, 2018</span>
+      <span class="header-time">12:00:00</span>
+      <img class="header-add" alt="Add shortcut icon" src="images/add_icon.png" />
+      <div class="header-add-overlay waves-effect waves-light"></div>
+      <img class="header-info" alt="Extension info icon" src="images/question_icon.png" />
+      <div class="header-info-overlay waves-effect waves-light"></div>
+      <a href="options.html">
+        <img class="header-settings" alt="Settings icon" src="images/gear_icon.png" />
+        <div class="header-settings-overlay waves-effect waves-light"></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="float-header">
+    <div class="float-datetime">
+      <span class="header-float-date">Wednesday, March 3, 2018</span>
+      <span class="header-float-time">12:00:00</span>
+    </div>
+    <img class="float-add" alt="Add shortcut icon" src="images/add_icon.png" />
+    <div class="float-add-overlay waves-effect waves-light"></div>
+    <img class="float-info" alt="Extension info icon" src="images/question_icon.png" />
+    <div class="float-info-overlay waves-effect waves-light"></div>
+    <a href="options.html">
+      <img class="float-settings" alt="Settings icon" src="images/gear_icon.png" />
+      <div class="float-settings-overlay waves-effect waves-light"></div>
+    </a>
+  </div>
+
+  <ul class="shortcut-grid">
+  </ul>
+
+  <div class="progress-container">
+    <div class="progress">
+      <div class="indeterminate"></div>
+    </div>
+  </div>
+
+  <div class="side-container">
+    <div class="shortcut-card-test waves-effect waves-blue">
+      <img class="shortcut-icon-test" alt="Preview shortcut icon" src="images/shortcut_icon.png" draggable="false" />
+      <span class="shortcut-name-test">Title</span>
+    </div>
+    <div class="side-container-error">This is an error message!</div>
+    <div class="side-container-form">
+      <div class="file-field input-field">
+        <div class="btn waves-effect waves-light">
+          <span>Image</span>
+          <input id="shortcut-file" type="file">
+        </div>
+        <div class="file-path-wrapper">
+          <input id="shortcut-file-text" class="file-path validate" type="text">
+        </div>
+      </div>
+      <div class="input-field col s6">
+        <input placeholder="" id="shortcut-title" type="text" class="validate">
+        <label for="shortcut-title">Title</label>
+      </div>
+      <div class="input-field col s6">
+        <input placeholder="" id="shortcut-url" type="text" class="validate">
+        <label for="shortcut-url">URL</label>
+      </div>
+      <div id="save-btn" class="btn btn-margin-right waves-effect waves-light">Save</div>
+      <div id="close-btn" class="btn btn-margin-left waves-effect waves-light">Close</div>
+    </div>
+  </div>
+  <div class="page-overlay"></div>
+
+  <div class="lightbox-wrapper">
+    <div id="lightbox">
+      <div class="lightbox-content">
+        Hi! Thanks for using the MyHomeTab extension!
+        <br><br>
+        I've included some default shortcuts to use. You can keep them, edit them, or remove them, your choice! I've created this extension to serve my own purposes and I've made it public for anyone who enjoys a customizable new tab page, same as I.
+        <br><br>
+        <b>Header Buttons:</b>
+        <br>
+        Left to right: add a new shortcut, this info box, and the settings page. Add all the shortcuts you want and adjust any customizable content on the settings page!
+        <br><br>
+        <b>Shortcuts:</b>
+        <br>
+        To edit or delete a shortcut, hover over the top right area of the shortcut. Click on the pencil or the "x" to edit or delete, respectively.
+        <br><br>
+        If you have any questions, would like to see some features implemented, or just need to talk, email me at <a href="mailto:dennydornberg@gmail.com">dennydornberg@gmail.com</a>.
+      </div>
+      <div class="lightbox-footer">
+        <span id="lightbox-close">CLOSE</span>
+      </div>
+    </div>
+  </div>
+  <div id="lightbox-overlay"></div>
+</body>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/sortable.min.js"></script>
+<script src="js/new-tab.js"></script>
+
+</html>
