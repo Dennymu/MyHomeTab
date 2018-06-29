@@ -217,7 +217,6 @@ function initCards() {
   var cardGrid = document.getElementsByClassName("shortcut-grid")[0];
   var cardKeys = Object.keys(data["cards"]);
   initAddCard();
-  initCardOptions();
 
   loader.style.visibility = "visible";
   for (var i = 0; i < cardKeys.length; i++) {
@@ -245,6 +244,7 @@ function initCards() {
     }
   });
 
+  initCardOptions();
   initCardManager();
 }
 
