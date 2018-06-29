@@ -88,6 +88,7 @@ var defaultData = {
     }
   },
   "header-background-color": "#fafafa",
+  "header-font-color": "000000",
   "show-header": true,
   "show-clock": true,
   "time": {
@@ -160,6 +161,10 @@ function validateData() {
     data["header-background-color"] = "#fafafa";
   }
 
+  if (data["header-font-color"] === undefined) {
+    data["header-font-color"] = "#000000";
+  }
+
   setData();
 }
 
@@ -184,6 +189,7 @@ function hasHeader() {
     var headerInfo = document.getElementsByClassName("header-info-overlay")[0];
     header.style.display = "block";
     header.style.backgroundColor = data["header-background-color"];
+    header.style.color = data["header-font-color"];
     loader.style.top = "40px";
     headerInfo.addEventListener("click", initLightBox);
     hasClock(dateHeader, timeHeader);

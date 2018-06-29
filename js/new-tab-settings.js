@@ -84,6 +84,7 @@ var defaultData = {
     }
   },
   "header-background-color": "#fafafa",
+  "header-font-color": "000000",
   "show-header": true,
   "show-clock": true,
   "time": {
@@ -140,6 +141,10 @@ function initSettings() {
       window.history.back();
     }
   });
+
+  //Set header in New Tab Settings according to setting for main MyHomeTab
+  document.getElementById("settings-header").style.color = data["header-font-color"];
+  document.getElementById("settings-header").style.backgroundColor = data["header-background-color"];
 }
 
 function getBackgroundOptions() {
@@ -159,7 +164,8 @@ function getBackgroundOptions() {
 }
 
 function getHeaderOptions() {
-  var headerColor = document.getElementById("header-background-color");
+  var headerBackgroundColor = document.getElementById("header-background-color");
+  var headerFontColor = document.getElementById("header-font-color");
   var header = document.getElementById("show-header");
   var clock = document.getElementById("show-clock");
   var format = document.getElementById("time-format");
@@ -170,7 +176,8 @@ function getHeaderOptions() {
   var time = document.getElementById("show-time");
   var timeOfDay = document.getElementById("show-timeofday");
 
-  headerColor.value = data["header-background-color"];
+  headerBackgroundColor.value = data["header-background-color"];
+  headerFontColor.value = data["header-font-color"];
 
   if (data["show-header"]) {
     header.checked = true;
@@ -265,7 +272,8 @@ function setBackgroundOptions() {
 }
 
 function setHeaderOptions() {
-  var headerColor = document.getElementById("header-background-color");
+  var headerBackgroundColor = document.getElementById("header-background-color");
+  var headerFontColor = document.getElementById("header-font-color");
   var header = document.getElementById("show-header");
   var clock = document.getElementById("show-clock");
   var format = document.getElementById("time-format");
@@ -276,12 +284,22 @@ function setHeaderOptions() {
   var time = document.getElementById("show-time");
   var timeOfDay = document.getElementById("show-timeofday");
 
-  headerColor.addEventListener("input", function() {
-    if (headerColor.value.length === 7 || headerColor.value.length === 4) {
-      data["header-background-color"] = headerColor.value;
+  headerBackgroundColor.addEventListener("input", function() {
+    if (headerBackgroundColor.value.length === 7 || headerBackgroundColor.value.length === 4) {
+      data["header-background-color"] = headerBackgroundColor.value;
       setData();
     } else {
       data["header-background-color"] = "#fafafa";
+      setData();
+    }
+  });
+
+  headerFontColor.addEventListener("input", function() {
+    if (headerFontColor.value.length === 7 || headerFontColor.value.length === 4) {
+      data["header-font-color"] = headerFontColor.value;
+      setData();
+    } else {
+      data["header-font-color"] = "#000000";
       setData();
     }
   });
