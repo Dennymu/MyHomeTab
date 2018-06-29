@@ -153,6 +153,10 @@ function validateData() {
     data["card-background-color"] = "#ffffff";
   }
 
+  if (data["card-font-color"] === undefined) {
+    data["card-font-color"] = "#000000";
+  }
+
   if (data["card-default-icon"] === undefined) {
     data["card-default-icon"] = "images/shortcut_icon.png";
   }
@@ -338,11 +342,13 @@ function removeCard(element) {
 
 function initCardOptions() {
   var cards = document.getElementsByClassName("shortcut-card");
+  var cardNames = document.getElementsByClassName("shortcut-name");
   var background = cardBackground();
 
   for (var i = 0; i < cards.length; i++) {
     cards[i].style.opacity = data["card-opacity"];
     cards[i].style.backgroundColor = background;
+    cardNames[i].style.color = data["card-font-color"];
   }
 
   function cardBackground() {

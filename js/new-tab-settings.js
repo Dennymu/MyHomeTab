@@ -220,10 +220,12 @@ function getShortcutOptions() {
   var opacity = document.getElementById("card-opacity");
   var backgroundOpacity = document.getElementById("card-background-opacity");
   var backgroundColor = document.getElementById("card-background-color");
+  var fontColor = document.getElementById("card-font-color");
 
   opacity.value = parseFloat(data["card-opacity"], 10) * 100;
   backgroundOpacity.value = parseFloat(data["card-background-opacity"], 10) * 100;
   backgroundColor.value = data["card-background-color"];
+  fontColor.value = data["card-font-color"];
 }
 
 function setBackgroundOptions() {
@@ -399,6 +401,7 @@ function setShortcutOptions() {
   var opacity = document.getElementById("card-opacity");
   var backgroundOpacity = document.getElementById("card-background-opacity");
   var backgroundColor = document.getElementById("card-background-color");
+  var fontColor = document.getElementById("card-font-color");
   var icon = document.getElementById("card-icon");
   var iconReset = document.getElementById("reset-icon");
 
@@ -418,6 +421,16 @@ function setShortcutOptions() {
       setData();
     } else {
       data["card-background-color"] = "#ffffff";
+      setData();
+    }
+  });
+
+  fontColor.addEventListener("input", function() {
+    if (backgroundColor.value.length === 7 || backgroundColor.value.length === 4) {
+      data["card-font-color"] = fontColor.value;
+      setData();
+    } else {
+      data["card-font-color"] = "#000000";
       setData();
     }
   });
