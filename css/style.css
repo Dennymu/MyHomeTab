@@ -5,10 +5,11 @@
 }
 
 body {
-  background-color: #03a9f4;
+  background-color: #ffffff;
   box-sizing: border-box;
   font-family: "Roboto";
   margin: 0;
+  transition: .15s ease-out;
 }
 
 .body-image {
@@ -26,6 +27,7 @@ body {
   position: relative;
   height: 40px;
   display: none;
+  transition: .15s ease-out;
 }
 
 .settings-header {
@@ -134,12 +136,17 @@ body {
 
 .shortcut-card, .shortcut-card-test {
   background-color: #fff;
+  border-radius: 2px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
   display: block;
   height: 140px;
   margin: 10px;
   transition: .15s ease-out;
   width: 150px;
+}
+
+.shortcut-card {
+  display: none;
 }
 
 .shortcut-card-test {
@@ -425,6 +432,11 @@ input[type=range]::-webkit-slider-thumb {
   animation: fade-in .2s cubic-bezier(.39, .575, .565, 1) both
 }
 
+.fade-in-card {
+  -webkit-animation: fade-in-card .3s cubic-bezier(.39, .575, .565, 1) both;
+  animation: fade-in-card .3s cubic-bezier(.39, .575, .565, 1) both
+}
+
 .slide-in-right {
   -webkit-animation: slide-in-right 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   animation: slide-in-right 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
@@ -460,6 +472,24 @@ input[type=range]::-webkit-slider-thumb {
   }
   100% {
     opacity: .2
+  }
+}
+
+@-webkit-keyframes fade-in-card {
+  0% {
+    opacity: 0
+  }
+  100% {
+    opacity: 1
+  }
+}
+
+@keyframes fade-in-card {
+  0% {
+    opacity: 0
+  }
+  100% {
+    opacity: 1
   }
 }
 

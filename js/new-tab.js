@@ -349,6 +349,8 @@ function initCardOptions() {
     cards[i].style.opacity = data["card-opacity"];
     cards[i].style.backgroundColor = background;
     cardNames[i].style.color = data["card-font-color"];
+    cards[i].style.display = "block";
+    cards[i].classList.add("fade-in-card");
   }
 
   function cardBackground() {
@@ -358,6 +360,12 @@ function initCardOptions() {
     cssColor = "rgba(" + rgb.r + ", " + rgb.g + ", " + rgb.b + ", " + backgroundOpacity + ")";
     return cssColor;
   }
+
+  setTimeout(function() {
+    for (var i = 0; i < cards.length; i++) {
+      cards[i].classList.remove("fade-in-card");
+    }
+  }, 300);
 }
 
 function updateData(action) {
