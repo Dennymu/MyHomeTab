@@ -12,6 +12,10 @@ body {
   transition: .15s ease-out;
 }
 
+.body-settings {
+  background-color: #03a9f4;
+}
+
 .body-image {
   display: none;
   height: 100%;
@@ -352,6 +356,10 @@ input[type=range]::-webkit-slider-thumb {
 
 .btn:focus {
   background-color: #1468A4;
+}
+
+.btn-full {
+  width: 100%;
 }
 
 .lightbox-wrapper {

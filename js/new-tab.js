@@ -9,7 +9,9 @@ var defaultData = {
   "card-background-color": "#ffffff",
   "card-background-opacity": "1",
   "card-default-icon": "images/shortcut_icon.png",
+  "card-height": "140px",
   "card-opacity": "1",
+  "card-width": "150px",
   "cards": {
     "0": {
       "name": "Google",
@@ -167,6 +169,14 @@ function validateData() {
 
   if (data["header-font-color"] === undefined) {
     data["header-font-color"] = "#000000";
+  }
+
+  if (data["card-height"] === undefined) {
+    data["card-height"] = "140px";
+  }
+
+  if (data["card-width"] === undefined) {
+    data["card-width"] = "150px";
   }
 
   setData();
@@ -350,6 +360,9 @@ function initCardOptions() {
     cards[i].style.backgroundColor = background;
     cardNames[i].style.color = data["card-font-color"];
     cards[i].style.display = "block";
+    cards[i].style.height = data["card-height"];
+    cards[i].style.width = data["card-width"];
+    cards[i].childNodes[1].style.width = data["card-width"];
     cards[i].classList.add("fade-in-card");
   }
 

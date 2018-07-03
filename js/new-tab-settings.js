@@ -5,7 +5,9 @@ var defaultData = {
   "background-option": "color",
   "card-background-opacity": "1",
   "card-default-icon": "images/shortcut_icon.png",
+  "card-height": "140px",
   "card-opacity": "1",
+  "card-width": "150px",
   "cards": {
     "0": {
       "name": "Google",
@@ -221,11 +223,15 @@ function getShortcutOptions() {
   var backgroundOpacity = document.getElementById("card-background-opacity");
   var backgroundColor = document.getElementById("card-background-color");
   var fontColor = document.getElementById("card-font-color");
+  var height = document.getElementById("card-height");
+  var width = document.getElementById("card-width");
 
   opacity.value = parseFloat(data["card-opacity"], 10) * 100;
   backgroundOpacity.value = parseFloat(data["card-background-opacity"], 10) * 100;
   backgroundColor.value = data["card-background-color"];
   fontColor.value = data["card-font-color"];
+  height.value = data["card-height"].slice(0, data["card-height"].length - 2);
+  width.value = data["card-width"].slice(0, data["card-width"].length - 2);
 }
 
 function setBackgroundOptions() {
@@ -404,6 +410,9 @@ function setShortcutOptions() {
   var fontColor = document.getElementById("card-font-color");
   var icon = document.getElementById("card-icon");
   var iconReset = document.getElementById("reset-icon");
+  var height = document.getElementById("card-height");
+  var width = document.getElementById("card-width");
+  var numReg = /^\d+$/;
 
   opacity.addEventListener("change", function() {
     data["card-opacity"] = (opacity.value / 100).toString();
@@ -453,6 +462,26 @@ function setShortcutOptions() {
     data["card-default-icon"] = "images/shortcut_icon.png";
     setData();
   });
+
+  height.addEventListener("input", function() {
+    if (numReg.test(height.value)) {
+      data["card-height"] = height.value + "px";
+      setData();
+    } else {
+      data["card-height"] = "140px";
+      setData();
+    }
+  });
+
+  width.addEventListener("input", function() {
+    if (numReg.test(width.value)) {
+      data["card-width"] =  width.value + "px";
+      setData();
+    } else {
+      data["card-width"] = "150px";
+      setData();
+    }
+  });
 }
 
 function manageData() {
@@ -490,6 +519,7 @@ function manageData() {
       uploadData = JSON.parse(reader.result);
       data = uploadData;
       setData();
+      alert("Your data has been uploaded.");
     }, false);
 
     if (file) {
