@@ -138,13 +138,18 @@ body {
   width: 100%;
 }
 
+li a {
+  margin: 10px;
+  display: flex;
+  transition: .15s ease-out;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
 .shortcut-card, .shortcut-card-test {
   background-color: #fff;
   border-radius: 2px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
   display: block;
   height: 140px;
-  margin: 10px;
   transition: .15s ease-out;
   width: 150px;
 }
@@ -157,7 +162,7 @@ body {
   margin: 10px auto;
 }
 
-.shortcut-card:hover {
+li a:hover {
   box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);
   margin-top: 5px;
 }
