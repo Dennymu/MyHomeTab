@@ -766,6 +766,7 @@ function initSideContainer(type, index) {
 
       if (e.key === "Escape") {
         hideSideContainer();
+        emptyFields();
       }
     }
   });
