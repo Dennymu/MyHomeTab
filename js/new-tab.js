@@ -344,7 +344,7 @@ function initRemoveCard() {
 }
 
 function removeCard(element) {
-  if (confirm("Are you sure you want to delete the " + element.parentElement.childNodes[1].innerHTML + " shortcut?")) {
+  if (confirm("Are you sure you want to delete the " + element.parentElement.parentElement.childNodes[1].innerHTML + " shortcut?")) {
     element.parentElement.parentElement.parentElement.parentElement.remove();
     updateData("remove");
   }
