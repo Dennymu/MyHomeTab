@@ -1,6 +1,7 @@
 var sideOverlay = document.getElementsByClassName("page-overlay")[0];
 var sideContainer = document.getElementsByClassName("side-container")[0];
 var loader = document.getElementsByClassName("progress-container")[0];
+var originalSideOverlay = document.getElementsByClassName("side-container")[0].innerHTML;
 var data = null;
 var defaultData = {
   "background-color": "#03a9f4",
@@ -338,7 +339,7 @@ function initAddCard() {
     showSideContainer("add");
     console.log("Finished showSideContainer, in initAddCard with headerAdd click event active");
     headerAdd.removeEventListener("click", headerAddListener);
-    headerAdd.addEventListener("click", floatAddListener);
+    headerAdd.addEventListener("click", headerAddListener);
   });
   floatAdd.addEventListener("click", function floatAddListener() {
     console.log("In initAddCard, floatAdd click event activated, calling showSideContainer");
@@ -1008,7 +1009,7 @@ function hideSideContainer() {
 }
 
 function resetSideContainer() {
-  document.getElementsByClassName("side-container")[0].innerHTML = "<div class=\"shortcut-card-test waves-effect waves-blue\"><img class=\"shortcut-icon-test\" alt=\"Preview shortcut icon\" src=\"images/shortcut_icon.png\" draggable=\"false\" /><span class=\"shortcut-name-test\">Title</span></div><div class=\"side-container-error\">This is an error message!</div><div class=\"side-container-form\"><div class=\"file-field input-field\"><div class=\"btn waves-effect waves-light\"><span>Image</span><input id=\"shortcut-file\" type=\"file\"></div><div class=\"file-path-wrapper\"><input id=\"shortcut-file-text\" class=\"file-path validate\" type=\"text\"></div></div><div class=\"input-field col s6\"><input placeholder=\"\" id=\"shortcut-title\" type=\"text\" class=\"validate\"><label for=\"shortcut-title\">Title</label></div><div class=\"input-field col s6\"><input placeholder=\"\" id=\"shortcut-url\" type=\"text\" class=\"validate\"><label for=\"shortcut-url\">URL</label></div><div id=\"save-btn\" class=\"btn btn-margin-right waves-effect waves-light\">Save</div><div id=\"close-btn\" class=\"btn btn-margin-left waves-effect waves-light\">Close</div></div>\"";
+  document.getElementsByClassName("side-container")[0].innerHTML = originalSideOverlay;
 }
 
 function refreshCard(index) {
