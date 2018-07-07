@@ -236,7 +236,7 @@ function initCards() {
   for (var i = 0; i < cardKeys.length; i++) {
     var html = "";
     html += "<li>";
-    html += "<a href=" + data["cards"][cardKeys[i]]["url"] + ">";
+    html += "<a class='shortcut-link' href=" + data["cards"][cardKeys[i]]["url"] + ">";
     html += "<div class='shortcut-card waves-effect waves-blue' draggable='true'>";
     html += "<img class='shortcut-icon' alt='" + data["cards"][cardKeys[i]]["name"] + " shortcut' src='" + data["cards"][cardKeys[i]]["icon"] + "' draggable='false' />";
     html += "<span class='shortcut-name'>" + data["cards"][cardKeys[i]]["name"] + "</span>";
@@ -278,7 +278,7 @@ function addCard(imageData, title, url) {
   var cardGrid = document.getElementsByClassName("shortcut-grid")[0];
   var html = "";
   html += "<li>";
-  html += "<a href=" + url + ">";
+  html += "<a class='shortcut-link' href=" + url + ">";
   html += "<div class='shortcut-card waves-effect waves-blue' draggable='true'>";
   html += "<img class='shortcut-icon' alt='" + title + " icon' src='" + imageData + "' draggable='false' />";
   html += "<span class='shortcut-name'>" + title + "</span>";
