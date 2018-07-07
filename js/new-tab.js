@@ -881,10 +881,12 @@ function initSideContainer(type, index) {
     url = data["cards"][index - 1]["url"];
     title = data["cards"][index - 1]["name"];
     imageData = data["cards"][index - 1]["icon"];
-    inputURL.value = url;
-    inputURL.text = url;
     inputTitle.value = title;
     inputTitle.text = title;
+    inputTitle.parentElement.childNodes[3].classList.add("active");
+    inputURL.value = url;
+    inputURL.text = url;
+    inputURL.parentElement.childNodes[3].classList.add("active");
     previewTitle.innerHTML = title;
     previewImage.src = imageData;
     console.log("End of fillFields in initSideContainer");
@@ -892,11 +894,13 @@ function initSideContainer(type, index) {
 
   function emptyFields() {
     console.log("Arrived in emptyFields in initSideContainer");
-    inputURL.value = "";
-    inputURL.text = "";
     previewImage.src = data["card-default-icon"];
     inputTitle.value = "";
     inputTitle.text = "";
+    inputTitle.parentElement.childNodes[3].classList.remove("active");
+    inputURL.value = "";
+    inputURL.text = "";
+    inputURL.parentElement.childNodes[3].classList.remove("active");
     previewTitle.innerHTML = "Title";
     inputFile.files[0] = "";
     inputFileText.text = "";
