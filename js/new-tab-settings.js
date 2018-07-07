@@ -115,7 +115,7 @@ function getData() {
     } else {
       data = userData;
     }
-    initSettings()
+    initSettings();
   });
 }
 
