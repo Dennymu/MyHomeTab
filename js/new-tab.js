@@ -153,16 +153,16 @@ function setData() {
   console.log("End of setData");
 }
 
-function removeData(removedData) {
-  console.log("Arrived in removeData");
-  chrome.storage.local.remove(removedData, function() {
-    if (chrome.runtime.lastError) {
-      console.log("lastError active, error is as follows:");
-      console.log(chrome.runtime.lastError);
-    }
-  });
-  console.log("End of removeData");
-}
+// function removeData(removedData) {
+//   console.log("Arrived in removeData");
+//   chrome.storage.local.remove(removedData, function() {
+//     if (chrome.runtime.lastError) {
+//       console.log("lastError active, error is as follows:");
+//       console.log(chrome.runtime.lastError);
+//     }
+//   });
+//   console.log("End of removeData");
+// }
 
 function validateData() {
   console.log("Arrived in validateData");
@@ -299,8 +299,8 @@ function initCards() {
     html += "<img class='shortcut-icon' alt='" + data["cards"][cardKeys[i]]["name"] + " shortcut' src='" + data["cards"][cardKeys[i]]["icon"] + "' draggable='false' />";
     html += "<span class='shortcut-name'>" + data["cards"][cardKeys[i]]["name"] + "</span>";
     html += "<div class='shortcut-manager'>";
-    html += "<img class='shortcut-edit' alt='Edit icon' src='images/add_icon.png'>";
-    html += "<img class='shortcut-delete' alt='Delete icon' src='images/delete_icon.png'>";
+    //html += "<img class='shortcut-edit' alt='Edit icon' src='images/add_icon.png'>";
+    //html += "<img class='shortcut-delete' alt='Delete icon' src='images/delete_icon.png'>";
     html += "</div>";
     html += "</div>";
     html += "</a>";
@@ -324,7 +324,7 @@ function initCards() {
   initCardOptions();
   console.log("Finished initCardOptions, in initCards");
   console.log("In initCards, calling initCardManager");
-  initCardManager();
+  //initCardManager();
   console.log("Finished initCardManager, in initCards");
   console.log("End of initCards");
 }
@@ -333,15 +333,19 @@ function initAddCard() {
   console.log("Arrived in initAddCard");
   var headerAdd = document.getElementsByClassName("header-add-overlay")[0];
   var floatAdd = document.getElementsByClassName("float-add-overlay")[0];
-  headerAdd.addEventListener("click", function() {
+  headerAdd.addEventListener("click", function headerAddListener() {
     console.log("In initAddCard, headerAdd click event activated, calling showSideContainer");
     showSideContainer("add");
     console.log("Finished showSideContainer, in initAddCard with headerAdd click event active");
+    headerAdd.removeEventListener("click", headerAddListener);
+    headerAdd.addEventListener("click", floatAddListener);
   });
-  floatAdd.addEventListener("click", function() {
+  floatAdd.addEventListener("click", function floatAddListener() {
     console.log("In initAddCard, floatAdd click event activated, calling showSideContainer");
     showSideContainer("add");
     console.log("Finished showSideContainer, in initAddCard with floatAdd click event active");
+    floatAdd.removeEventListener("click", floatAddListener);
+    floatAdd.addEventListener("click", floatAddListener);
   });
   console.log("End of initAddCard");
 }
@@ -357,8 +361,8 @@ function addCard(imageData, title, url) {
   html += "<img class='shortcut-icon' alt='" + title + " icon' src='" + imageData + "' draggable='false' />";
   html += "<span class='shortcut-name'>" + title + "</span>";
   html += "<div class='shortcut-manager'>";
-  html += "<img class='shortcut-edit' alt='Edit icon' src='images/add_icon.png'>";
-  html += "<img class='shortcut-delete' alt='Delete icon' src='images/delete_icon.png'>";
+  //html += "<img class='shortcut-edit' alt='Edit icon' src='images/add_icon.png'>";
+  //html += "<img class='shortcut-delete' alt='Delete icon' src='images/delete_icon.png'>";
   html += "</div>";
   html += "</div>";
   html += "</a>";
@@ -378,86 +382,86 @@ function addCard(imageData, title, url) {
   initCardOptions();
   console.log("Finished initCardOptions, in addCard");
   console.log("In addCard, calling initCardManager");
-  initCardManager();
+  //initCardManager();
   console.log("Finished initCardManager, in addCard");
   console.log("End of addCard");
 }
 
-function initCardManager() {
-  console.log("Arrived in initCardManager");
-  var manager = document.getElementsByClassName("shortcut-manager");
+// function initCardManager() {
+//   console.log("Arrived in initCardManager");
+//   var manager = document.getElementsByClassName("shortcut-manager");
+//
+//   for (var i = 0; i < manager.length; i++) {
+//     manager[i].addEventListener("click", function(e) {
+//       console.log("In initCardManager, manager " + i + " has been clicked, preventing default action");
+//       e.preventDefault();
+//     });
+//   }
+//
+//   console.log("In initCardManager, calling initEditCard");
+//   initEditCard();
+//   console.log("Finished initEditCard, in initCardManager");
+//   console.log("In initCardManager, calling initRemoveCard");
+//   initRemoveCard();
+//   console.log("Finished initRemoveCard, in initCardManager");
+//   console.log("End of initCardManager");
+// }
 
-  for (var i = 0; i < manager.length; i++) {
-    manager[i].addEventListener("click", function(e) {
-      console.log("In initCardManager, manager " + i + " has been clicked, preventing default action");
-      e.preventDefault();
-    });
-  }
+// function initEditCard() {
+//   console.log("Arrived in initEditCard");
+//   var edit = document.getElementsByClassName("shortcut-edit");
+//
+//   for (var i = 0; i < edit.length; i++) {
+//     edit[i].addEventListener("click", function(e) {
+//       console.log("Edit button has been clicked");
+//       var grid = document.getElementsByClassName("shortcut-grid")[0];
+//       var element = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
+//       var index = 0;
+//
+//       for (var j = 0; j < grid.childNodes.length; j++) {
+//         if (grid.childNodes[j] === element) {
+//           console.log("Element has been found, it's card no. " + j);
+//           index = j;
+//           console.log("Breaking out of FOR loop");
+//           break;
+//         }
+//         console.log("Still in FOR loop");
+//       }
+//       console.log("Out of FOR loop");
+//
+//       console.log("In initEditCard, edit button has been clicked, calling showSideContainer");
+//       showSideContainer("edit", index);
+//       console.log("Finished showSideContainer, in initEditCard, edit button has been clicked");
+//     });
+//   }
+//   console.log("End of initEditCard");
+// }
 
-  console.log("In initCardManager, calling initEditCard");
-  initEditCard();
-  console.log("Finished initEditCard, in initCardManager");
-  console.log("In initCardManager, calling initRemoveCard");
-  initRemoveCard();
-  console.log("Finished initRemoveCard, in initCardManager");
-  console.log("End of initCardManager");
-}
+// function initRemoveCard() {
+//   console.log("Arrived in initRemoveCard");
+//   var remove = document.getElementsByClassName("shortcut-delete");
+//   for (var i = 0; i < remove.length; i++) {
+//     remove[i].addEventListener("click", function(e) {
+//       console.log("Remove button has been clicked, removing element " + e.currentTarget);
+//       console.log("In initRemoveCard, remove button active, calling removeCard");
+//       removeCard(e.currentTarget);
+//       console.log("Finished removeCard, in initRemoveCard with remove button active");
+//     });
+//   }
+//   console.log("End of initRemoveCard");
+// }
 
-function initEditCard() {
-  console.log("Arrived in initEditCard");
-  var edit = document.getElementsByClassName("shortcut-edit");
-
-  for (var i = 0; i < edit.length; i++) {
-    edit[i].addEventListener("click", function(e) {
-      console.log("Edit button has been clicked");
-      var grid = document.getElementsByClassName("shortcut-grid")[0];
-      var element = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
-      var index = 0;
-
-      for (var j = 0; j < grid.childNodes.length; j++) {
-        if (grid.childNodes[j] === element) {
-          console.log("Element has been found, it's card no. " + j);
-          index = j;
-          console.log("Breaking out of FOR loop");
-          break;
-        }
-        console.log("Still in FOR loop");
-      }
-      console.log("Out of FOR loop");
-
-      console.log("In initEditCard, edit button has been clicked, calling showSideContainer");
-      showSideContainer("edit", index);
-      console.log("Finished showSideContainer, in initEditCard, edit button has been clicked");
-    });
-  }
-  console.log("End of initEditCard");
-}
-
-function initRemoveCard() {
-  console.log("Arrived in initRemoveCard");
-  var remove = document.getElementsByClassName("shortcut-delete");
-  for (var i = 0; i < remove.length; i++) {
-    remove[i].addEventListener("click", function(e) {
-      console.log("Remove button has been clicked, removing element " + e.currentTarget);
-      console.log("In initRemoveCard, remove button active, calling removeCard");
-      removeCard(e.currentTarget);
-      console.log("Finished removeCard, in initRemoveCard with remove button active");
-    });
-  }
-  console.log("End of initRemoveCard");
-}
-
-function removeCard(element) {
-  console.log("Arrived in removeCard");
-  if (confirm("Are you sure you want to delete the " + element.parentElement.parentElement.childNodes[1].innerHTML + " shortcut?")) {
-    console.log("In removeCard, confirm dialogue activated, deleting element");
-    element.parentElement.parentElement.parentElement.parentElement.remove();
-    console.log("In removeCard, confirm dialogue activated, element deleted, calling updateData");
-    updateData("remove");
-    console.log("Finished updateData, in removeCard, confirm dialogue activated");
-  }
-  console.log("End of removeCard");
-}
+// function removeCard(element) {
+//   console.log("Arrived in removeCard");
+//   if (confirm("Are you sure you want to delete the " + element.parentElement.parentElement.childNodes[1].innerHTML + " shortcut?")) {
+//     console.log("In removeCard, confirm dialogue activated, deleting element");
+//     element.parentElement.parentElement.parentElement.parentElement.remove();
+//     console.log("In removeCard, confirm dialogue activated, element deleted, calling updateData");
+//     updateData("remove");
+//     console.log("Finished updateData, in removeCard, confirm dialogue activated");
+//   }
+//   console.log("End of removeCard");
+// }
 
 function initCardOptions() {
   console.log("Arrived in initCardOptions");
@@ -753,7 +757,7 @@ function initSideContainer(type, index) {
   var title = "";
   var url = "";
 
-  sideOverlay.addEventListener("click", function() {
+  sideOverlay.addEventListener("click", function sideOverlayListener() {
     console.log("In initSideContainer, sideOverlay clicked, calling emptyFields");
     emptyFields();
     console.log("Finished emptyFields, in initSideContainer, sideOverlay clicked");
@@ -762,7 +766,7 @@ function initSideContainer(type, index) {
     console.log("Finished hideSideContainer, in initSideContainer, sideOverlay clicked");
   });
 
-  closeBtn.addEventListener("click", function() {
+  closeBtn.addEventListener("click", function closeBtnListener() {
     console.log("In initSideContainer, closeBtn clicked, calling emptyFields");
     emptyFields();
     console.log("Finished emptyFields, in initSideContainer, closeBtn clicked");
@@ -771,13 +775,13 @@ function initSideContainer(type, index) {
     console.log("finished hideSideContainer, in initSideContainer, closeBtn clicked");
   });
 
-  if (type === "edit") {
-    console.log("In initSideContainer, type is edit, calling fillFields");
-    fillFields(index);
-    console.log("Finished fillFields, in initSideContainer, type is edit");
-  }
+  // if (type === "edit") {
+  //   console.log("In initSideContainer, type is edit, calling fillFields");
+  //   fillFields(index);
+  //   console.log("Finished fillFields, in initSideContainer, type is edit");
+  // }
 
-  saveBtn.addEventListener("click", function() {
+  saveBtn.addEventListener("click", function saveBtnListener() {
     console.log("In initSideContainer, saveBtn clicked");
     var result = false;
 
@@ -787,11 +791,11 @@ function initSideContainer(type, index) {
       console.log("Finished newCard, in initSideContainer, saveBtn clicked, type is add");
     }
 
-    if (type === "edit") {
-      console.log("In initSideContainer, saveBtn clicked, type is edit, calling editCard");
-      result = editCard(index);
-      console.log("Finished editCard, in initSideContainer, saveBtn clicked, type is edit");
-    }
+    // if (type === "edit") {
+    //   console.log("In initSideContainer, saveBtn clicked, type is edit, calling editCard");
+    //   result = editCard(index);
+    //   console.log("Finished editCard, in initSideContainer, saveBtn clicked, type is edit");
+    // }
 
     if (result) {
       console.log("In initSideContainer, saveBtn clicked, result good, calling emptyFields");
@@ -819,29 +823,29 @@ function initSideContainer(type, index) {
     return true;
   }
 
-  function editCard(index) {
-    console.log("Arrived in editCard in initSideContainer");
-    console.log("In editCard in initSideContainer, calling validateFields");
-    if (!validateFields()) {
-      console.log("In editCard in initSideContainer, validateFields FAILED, returning FALSE");
-      console.log("End of editCard in initSideContainer");
-      return false;
-    }
-
-    data["cards"][index - 1]["url"] = url;
-    data["cards"][index - 1]["name"] = title;
-    data["cards"][index - 1]["icon"] = imageData;
-
-    console.log("In editCard in initSideContainer, validateFields good, calling setData");
-    setData();
-    console.log("Finished setData, in editCard in initSideContainer, validateFields good");
-    console.log("In editCard in initSideContainer, validateFields good, calling refreshCard");
-    refreshCard(index);
-    console.log("Finished refreshCard, in editCard in initSideContainer, validateFields good, returning TRUE");
-    console.log("End of editCard in initSideContainer");
-
-    return true;
-  }
+  // function editCard(index) {
+  //   console.log("Arrived in editCard in initSideContainer");
+  //   console.log("In editCard in initSideContainer, calling validateFields");
+  //   if (!validateFields()) {
+  //     console.log("In editCard in initSideContainer, validateFields FAILED, returning FALSE");
+  //     console.log("End of editCard in initSideContainer");
+  //     return false;
+  //   }
+  //
+  //   data["cards"][index - 1]["url"] = url;
+  //   data["cards"][index - 1]["name"] = title;
+  //   data["cards"][index - 1]["icon"] = imageData;
+  //
+  //   console.log("In editCard in initSideContainer, validateFields good, calling setData");
+  //   setData();
+  //   console.log("Finished setData, in editCard in initSideContainer, validateFields good");
+  //   console.log("In editCard in initSideContainer, validateFields good, calling refreshCard");
+  //   refreshCard(index);
+  //   console.log("Finished refreshCard, in editCard in initSideContainer, validateFields good, returning TRUE");
+  //   console.log("End of editCard in initSideContainer");
+  //
+  //   return true;
+  // }
 
   function validateFields() {
     console.log("Arrived in validateFields in initSideContainer");
@@ -871,19 +875,19 @@ function initSideContainer(type, index) {
     return true;
   }
 
-  function fillFields(index) {
-    console.log("Arrived in fillFields in initSideContainer");
-    url = data["cards"][index - 1]["url"];
-    title = data["cards"][index - 1]["name"];
-    imageData = data["cards"][index - 1]["icon"];
-    inputURL.value = url;
-    inputURL.text = url;
-    inputTitle.value = title;
-    inputTitle.text = title;
-    previewTitle.innerHTML = title;
-    previewImage.src = imageData;
-    console.log("End of fillFields in initSideContainer");
-  }
+  // function fillFields(index) {
+  //   console.log("Arrived in fillFields in initSideContainer");
+  //   url = data["cards"][index - 1]["url"];
+  //   title = data["cards"][index - 1]["name"];
+  //   imageData = data["cards"][index - 1]["icon"];
+  //   inputURL.value = url;
+  //   inputURL.text = url;
+  //   inputTitle.value = title;
+  //   inputTitle.text = title;
+  //   previewTitle.innerHTML = title;
+  //   previewImage.src = imageData;
+  //   console.log("End of fillFields in initSideContainer");
+  // }
 
   function emptyFields() {
     console.log("Arrived in emptyFields in initSideContainer");
@@ -913,17 +917,17 @@ function initSideContainer(type, index) {
     console.log("End of showError in initSideContainer");
   }
 
-  previewImage.addEventListener("click", function() {
+  previewImage.addEventListener("click", function previewImageListener() {
     console.log("In initSideContainer, previewImage clicked");
     inputFile.click();
     console.log("End of previewImage clicked, in initSideContainer");
   });
 
-  inputFile.addEventListener("change", function() {
+  inputFile.addEventListener("change", function inputFileListener() {
     var file = inputFile.files[0];
     var reader = new FileReader();
 
-    reader.addEventListener("load", function() {
+    reader.addEventListener("load", function readerListener() {
       previewImage.src = reader.result;
       imageData = reader.result;
     }, false);
@@ -933,7 +937,7 @@ function initSideContainer(type, index) {
     }
   });
 
-  inputTitle.addEventListener("change", function() {
+  inputTitle.addEventListener("change", function inputTitleListener() {
     console.log("In initSideContainer, inputTitle changed");
     previewTitle.innerHTML = inputTitle.value;
     title = inputTitle.value;
@@ -941,14 +945,14 @@ function initSideContainer(type, index) {
     console.log("End of inputTitle changed, in initSideContainer");
   });
 
-  inputURL.addEventListener("change", function() {
+  inputURL.addEventListener("change", function inputURLListener() {
     console.log("In initSideContainer, inputURL changed");
     url = inputURL.value;
     console.log("Url now " + url);
     console.log("End of inputURL changed, in initSideContainer");
   });
 
-  document.addEventListener("keyup", function(e) {
+  document.addEventListener("keyup", function documentListener(e) {
     console.log("In initSideContainer, keyup");
     if (sideContainer.style.display === "block") {
       console.log("Sidecontainer style block");
@@ -998,7 +1002,13 @@ function hideSideContainer() {
     sideContainer.style.display = "none";
     sideOverlay.style.display = "none";
   }, 200);
+  resetSideContainer();
   console.log("End of hideSideContainer");
+  //location.reload();
+}
+
+function resetSideContainer() {
+  document.getElementsByClassName("side-container")[0].innerHTML = "<div class=\"shortcut-card-test waves-effect waves-blue\"><img class=\"shortcut-icon-test\" alt=\"Preview shortcut icon\" src=\"images/shortcut_icon.png\" draggable=\"false\" /><span class=\"shortcut-name-test\">Title</span></div><div class=\"side-container-error\">This is an error message!</div><div class=\"side-container-form\"><div class=\"file-field input-field\"><div class=\"btn waves-effect waves-light\"><span>Image</span><input id=\"shortcut-file\" type=\"file\"></div><div class=\"file-path-wrapper\"><input id=\"shortcut-file-text\" class=\"file-path validate\" type=\"text\"></div></div><div class=\"input-field col s6\"><input placeholder=\"\" id=\"shortcut-title\" type=\"text\" class=\"validate\"><label for=\"shortcut-title\">Title</label></div><div class=\"input-field col s6\"><input placeholder=\"\" id=\"shortcut-url\" type=\"text\" class=\"validate\"><label for=\"shortcut-url\">URL</label></div><div id=\"save-btn\" class=\"btn btn-margin-right waves-effect waves-light\">Save</div><div id=\"close-btn\" class=\"btn btn-margin-left waves-effect waves-light\">Close</div></div>\"";
 }
 
 function refreshCard(index) {
