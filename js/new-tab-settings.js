@@ -3,8 +3,10 @@ var defaultData = {
   "background-color": "#03a9f4",
   "background-image": "0",
   "background-option": "color",
+  "card-background-color": "#ffffff",
   "card-background-opacity": "1",
   "card-default-icon": "images/shortcut_icon.png",
+  "card-font-color": "#333333",
   "card-height": "140px",
   "card-opacity": "1",
   "card-width": "150px",
@@ -412,6 +414,7 @@ function setShortcutOptions() {
   var iconReset = document.getElementById("reset-icon");
   var height = document.getElementById("card-height");
   var width = document.getElementById("card-width");
+  var resetCards = document.getElementById("reset-cards");
   var numReg = /^\d+$/;
 
   opacity.addEventListener("change", function() {
@@ -429,7 +432,7 @@ function setShortcutOptions() {
       data["card-background-color"] = backgroundColor.value;
       setData();
     } else {
-      data["card-background-color"] = "#ffffff";
+      data["card-background-color"] = defaultData["card-background-color"];
       setData();
     }
   });
@@ -439,7 +442,7 @@ function setShortcutOptions() {
       data["card-font-color"] = fontColor.value;
       setData();
     } else {
-      data["card-font-color"] = "#000000";
+      data["card-font-color"] = defaultData["card-font-color"];
       setData();
     }
   });
@@ -459,7 +462,7 @@ function setShortcutOptions() {
   });
 
   iconReset.addEventListener("click", function() {
-    data["card-default-icon"] = "images/shortcut_icon.png";
+    data["card-default-icon"] = defaultData["card-default-icon"];
     setData();
   });
 
@@ -468,7 +471,7 @@ function setShortcutOptions() {
       data["card-height"] = height.value + "px";
       setData();
     } else {
-      data["card-height"] = "140px";
+      data["card-height"] = defaultData["card-height"];
       setData();
     }
   });
@@ -478,7 +481,26 @@ function setShortcutOptions() {
       data["card-width"] =  width.value + "px";
       setData();
     } else {
-      data["card-width"] = "150px";
+      data["card-width"] = defaultData["card-width"];
+      setData();
+    }
+  });
+
+  resetCards.addEventListener("click", function() {
+    if (confirm("Are you sure you'd like to reset your card settings to default? Note: This will not remove your custom shortcuts.")) {
+      data["card-opacity"] = defaultData["card-opacity"];
+      opacity.value = parseFloat(defaultData["card-opacity"], 10) * 100;
+      data["card-background-opacity"] = defaultData["card-background-opacity"];
+      backgroundOpacity.value = parseFloat(defaultData["card-background-opacity"], 10) * 100;
+      data["card-background-color"] = defaultData["card-background-color"];
+      backgroundColor.value = defaultData["card-background-color"];
+      data["card-font-color"] = defaultData["card-font-color"];
+      fontColor.value = defaultData["card-font-color"];
+      data["card-default-icon"] = defaultData["card-default-icon"];
+      data["card-height"] = defaultData["card-height"];
+      height.value = defaultData["card-height"].slice(0, defaultData["card-height"].length - 2);
+      data["card-width"] = defaultData["card-width"];
+      width.value = defaultData["card-width"].slice(0, defaultData["card-width"].length - 2);
       setData();
     }
   });

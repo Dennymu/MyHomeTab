@@ -9,6 +9,7 @@ var defaultData = {
   "card-background-color": "#ffffff",
   "card-background-opacity": "1",
   "card-default-icon": "images/shortcut_icon.png",
+  "card-font-color": "#333333",
   "card-height": "140px",
   "card-opacity": "1",
   "card-width": "150px",
@@ -156,7 +157,7 @@ function validateData() {
   }
 
   if (data["card-font-color"] === undefined) {
-    data["card-font-color"] = "#000000";
+    data["card-font-color"] = "#333333";
   }
 
   if (data["card-default-icon"] === undefined) {
