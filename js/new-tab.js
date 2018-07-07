@@ -154,16 +154,16 @@ function setData() {
   console.log("End of setData");
 }
 
-// function removeData(removedData) {
-//   console.log("Arrived in removeData");
-//   chrome.storage.local.remove(removedData, function() {
-//     if (chrome.runtime.lastError) {
-//       console.log("lastError active, error is as follows:");
-//       console.log(chrome.runtime.lastError);
-//     }
-//   });
-//   console.log("End of removeData");
-// }
+function removeData(removedData) {
+  console.log("Arrived in removeData");
+  chrome.storage.local.remove(removedData, function() {
+    if (chrome.runtime.lastError) {
+      console.log("lastError active, error is as follows:");
+      console.log(chrome.runtime.lastError);
+    }
+  });
+  console.log("End of removeData");
+}
 
 function validateData() {
   console.log("Arrived in validateData");
@@ -301,7 +301,7 @@ function initCards() {
     html += "<span class='shortcut-name'>" + data["cards"][cardKeys[i]]["name"] + "</span>";
     html += "<div class='shortcut-manager'>";
     //html += "<img class='shortcut-edit' alt='Edit icon' src='images/add_icon.png'>";
-    //html += "<img class='shortcut-delete' alt='Delete icon' src='images/delete_icon.png'>";
+    html += "<img class='shortcut-delete' alt='Delete icon' src='images/delete_icon.png'>";
     html += "</div>";
     html += "</div>";
     html += "</a>";
@@ -325,7 +325,7 @@ function initCards() {
   initCardOptions();
   console.log("Finished initCardOptions, in initCards");
   console.log("In initCards, calling initCardManager");
-  //initCardManager();
+  initCardManager();
   console.log("Finished initCardManager, in initCards");
   console.log("End of initCards");
 }
@@ -363,7 +363,7 @@ function addCard(imageData, title, url) {
   html += "<span class='shortcut-name'>" + title + "</span>";
   html += "<div class='shortcut-manager'>";
   //html += "<img class='shortcut-edit' alt='Edit icon' src='images/add_icon.png'>";
-  //html += "<img class='shortcut-delete' alt='Delete icon' src='images/delete_icon.png'>";
+  html += "<img class='shortcut-delete' alt='Delete icon' src='images/delete_icon.png'>";
   html += "</div>";
   html += "</div>";
   html += "</a>";
@@ -383,30 +383,30 @@ function addCard(imageData, title, url) {
   initCardOptions();
   console.log("Finished initCardOptions, in addCard");
   console.log("In addCard, calling initCardManager");
-  //initCardManager();
+  initCardManager();
   console.log("Finished initCardManager, in addCard");
   console.log("End of addCard");
 }
 
-// function initCardManager() {
-//   console.log("Arrived in initCardManager");
-//   var manager = document.getElementsByClassName("shortcut-manager");
-//
-//   for (var i = 0; i < manager.length; i++) {
-//     manager[i].addEventListener("click", function(e) {
-//       console.log("In initCardManager, manager " + i + " has been clicked, preventing default action");
-//       e.preventDefault();
-//     });
-//   }
-//
-//   console.log("In initCardManager, calling initEditCard");
-//   initEditCard();
-//   console.log("Finished initEditCard, in initCardManager");
-//   console.log("In initCardManager, calling initRemoveCard");
-//   initRemoveCard();
-//   console.log("Finished initRemoveCard, in initCardManager");
-//   console.log("End of initCardManager");
-// }
+function initCardManager() {
+  console.log("Arrived in initCardManager");
+  var manager = document.getElementsByClassName("shortcut-manager");
+
+  for (var i = 0; i < manager.length; i++) {
+    manager[i].addEventListener("click", function(e) {
+      console.log("In initCardManager, manager " + i + " has been clicked, preventing default action");
+      e.preventDefault();
+    });
+  }
+
+  console.log("In initCardManager, calling initEditCard");
+  //initEditCard();
+  console.log("Finished initEditCard, in initCardManager");
+  console.log("In initCardManager, calling initRemoveCard");
+  initRemoveCard();
+  console.log("Finished initRemoveCard, in initCardManager");
+  console.log("End of initCardManager");
+}
 
 // function initEditCard() {
 //   console.log("Arrived in initEditCard");
@@ -438,31 +438,31 @@ function addCard(imageData, title, url) {
 //   console.log("End of initEditCard");
 // }
 
-// function initRemoveCard() {
-//   console.log("Arrived in initRemoveCard");
-//   var remove = document.getElementsByClassName("shortcut-delete");
-//   for (var i = 0; i < remove.length; i++) {
-//     remove[i].addEventListener("click", function(e) {
-//       console.log("Remove button has been clicked, removing element " + e.currentTarget);
-//       console.log("In initRemoveCard, remove button active, calling removeCard");
-//       removeCard(e.currentTarget);
-//       console.log("Finished removeCard, in initRemoveCard with remove button active");
-//     });
-//   }
-//   console.log("End of initRemoveCard");
-// }
+function initRemoveCard() {
+  console.log("Arrived in initRemoveCard");
+  var remove = document.getElementsByClassName("shortcut-delete");
+  for (var i = 0; i < remove.length; i++) {
+    remove[i].addEventListener("click", function(e) {
+      console.log("Remove button has been clicked, removing element " + e.currentTarget);
+      console.log("In initRemoveCard, remove button active, calling removeCard");
+      removeCard(e.currentTarget);
+      console.log("Finished removeCard, in initRemoveCard with remove button active");
+    });
+  }
+  console.log("End of initRemoveCard");
+}
 
-// function removeCard(element) {
-//   console.log("Arrived in removeCard");
-//   if (confirm("Are you sure you want to delete the " + element.parentElement.parentElement.childNodes[1].innerHTML + " shortcut?")) {
-//     console.log("In removeCard, confirm dialogue activated, deleting element");
-//     element.parentElement.parentElement.parentElement.parentElement.remove();
-//     console.log("In removeCard, confirm dialogue activated, element deleted, calling updateData");
-//     updateData("remove");
-//     console.log("Finished updateData, in removeCard, confirm dialogue activated");
-//   }
-//   console.log("End of removeCard");
-// }
+function removeCard(element) {
+  console.log("Arrived in removeCard");
+  if (confirm("Are you sure you want to delete the " + element.parentElement.parentElement.childNodes[1].innerHTML + " shortcut?")) {
+    console.log("In removeCard, confirm dialogue activated, deleting element");
+    element.parentElement.parentElement.parentElement.parentElement.remove();
+    console.log("In removeCard, confirm dialogue activated, element deleted, calling updateData");
+    updateData("remove");
+    console.log("Finished updateData, in removeCard, confirm dialogue activated");
+  }
+  console.log("End of removeCard");
+}
 
 function initCardOptions() {
   console.log("Arrived in initCardOptions");
@@ -1005,7 +1005,6 @@ function hideSideContainer() {
   }, 200);
   resetSideContainer();
   console.log("End of hideSideContainer");
-  //location.reload();
 }
 
 function resetSideContainer() {
