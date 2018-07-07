@@ -300,7 +300,7 @@ function initCards() {
     html += "<img class='shortcut-icon' alt='" + data["cards"][cardKeys[i]]["name"] + " shortcut' src='" + data["cards"][cardKeys[i]]["icon"] + "' draggable='false' />";
     html += "<span class='shortcut-name'>" + data["cards"][cardKeys[i]]["name"] + "</span>";
     html += "<div class='shortcut-manager'>";
-    //html += "<img class='shortcut-edit' alt='Edit icon' src='images/add_icon.png'>";
+    html += "<img class='shortcut-edit' alt='Edit icon' src='images/add_icon.png'>";
     html += "<img class='shortcut-delete' alt='Delete icon' src='images/delete_icon.png'>";
     html += "</div>";
     html += "</div>";
@@ -362,7 +362,7 @@ function addCard(imageData, title, url) {
   html += "<img class='shortcut-icon' alt='" + title + " icon' src='" + imageData + "' draggable='false' />";
   html += "<span class='shortcut-name'>" + title + "</span>";
   html += "<div class='shortcut-manager'>";
-  //html += "<img class='shortcut-edit' alt='Edit icon' src='images/add_icon.png'>";
+  html += "<img class='shortcut-edit' alt='Edit icon' src='images/add_icon.png'>";
   html += "<img class='shortcut-delete' alt='Delete icon' src='images/delete_icon.png'>";
   html += "</div>";
   html += "</div>";
@@ -400,7 +400,7 @@ function initCardManager() {
   }
 
   console.log("In initCardManager, calling initEditCard");
-  //initEditCard();
+  initEditCard();
   console.log("Finished initEditCard, in initCardManager");
   console.log("In initCardManager, calling initRemoveCard");
   initRemoveCard();
@@ -408,35 +408,35 @@ function initCardManager() {
   console.log("End of initCardManager");
 }
 
-// function initEditCard() {
-//   console.log("Arrived in initEditCard");
-//   var edit = document.getElementsByClassName("shortcut-edit");
-//
-//   for (var i = 0; i < edit.length; i++) {
-//     edit[i].addEventListener("click", function(e) {
-//       console.log("Edit button has been clicked");
-//       var grid = document.getElementsByClassName("shortcut-grid")[0];
-//       var element = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
-//       var index = 0;
-//
-//       for (var j = 0; j < grid.childNodes.length; j++) {
-//         if (grid.childNodes[j] === element) {
-//           console.log("Element has been found, it's card no. " + j);
-//           index = j;
-//           console.log("Breaking out of FOR loop");
-//           break;
-//         }
-//         console.log("Still in FOR loop");
-//       }
-//       console.log("Out of FOR loop");
-//
-//       console.log("In initEditCard, edit button has been clicked, calling showSideContainer");
-//       showSideContainer("edit", index);
-//       console.log("Finished showSideContainer, in initEditCard, edit button has been clicked");
-//     });
-//   }
-//   console.log("End of initEditCard");
-// }
+function initEditCard() {
+  console.log("Arrived in initEditCard");
+  var edit = document.getElementsByClassName("shortcut-edit");
+
+  for (var i = 0; i < edit.length; i++) {
+    edit[i].addEventListener("click", function(e) {
+      console.log("Edit button has been clicked");
+      var grid = document.getElementsByClassName("shortcut-grid")[0];
+      var element = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
+      var index = 0;
+
+      for (var j = 0; j < grid.childNodes.length; j++) {
+        if (grid.childNodes[j] === element) {
+          console.log("Element has been found, it's card no. " + j);
+          index = j;
+          console.log("Breaking out of FOR loop");
+          break;
+        }
+        console.log("Still in FOR loop");
+      }
+      console.log("Out of FOR loop");
+
+      console.log("In initEditCard, edit button has been clicked, calling showSideContainer");
+      showSideContainer("edit", index);
+      console.log("Finished showSideContainer, in initEditCard, edit button has been clicked");
+    });
+  }
+  console.log("End of initEditCard");
+}
 
 function initRemoveCard() {
   console.log("Arrived in initRemoveCard");
@@ -776,11 +776,11 @@ function initSideContainer(type, index) {
     console.log("finished hideSideContainer, in initSideContainer, closeBtn clicked");
   });
 
-  // if (type === "edit") {
-  //   console.log("In initSideContainer, type is edit, calling fillFields");
-  //   fillFields(index);
-  //   console.log("Finished fillFields, in initSideContainer, type is edit");
-  // }
+  if (type === "edit") {
+    console.log("In initSideContainer, type is edit, calling fillFields");
+    fillFields(index);
+    console.log("Finished fillFields, in initSideContainer, type is edit");
+  }
 
   saveBtn.addEventListener("click", function saveBtnListener() {
     console.log("In initSideContainer, saveBtn clicked");
@@ -792,11 +792,11 @@ function initSideContainer(type, index) {
       console.log("Finished newCard, in initSideContainer, saveBtn clicked, type is add");
     }
 
-    // if (type === "edit") {
-    //   console.log("In initSideContainer, saveBtn clicked, type is edit, calling editCard");
-    //   result = editCard(index);
-    //   console.log("Finished editCard, in initSideContainer, saveBtn clicked, type is edit");
-    // }
+    if (type === "edit") {
+      console.log("In initSideContainer, saveBtn clicked, type is edit, calling editCard");
+      result = editCard(index);
+      console.log("Finished editCard, in initSideContainer, saveBtn clicked, type is edit");
+    }
 
     if (result) {
       console.log("In initSideContainer, saveBtn clicked, result good, calling emptyFields");
@@ -824,29 +824,29 @@ function initSideContainer(type, index) {
     return true;
   }
 
-  // function editCard(index) {
-  //   console.log("Arrived in editCard in initSideContainer");
-  //   console.log("In editCard in initSideContainer, calling validateFields");
-  //   if (!validateFields()) {
-  //     console.log("In editCard in initSideContainer, validateFields FAILED, returning FALSE");
-  //     console.log("End of editCard in initSideContainer");
-  //     return false;
-  //   }
-  //
-  //   data["cards"][index - 1]["url"] = url;
-  //   data["cards"][index - 1]["name"] = title;
-  //   data["cards"][index - 1]["icon"] = imageData;
-  //
-  //   console.log("In editCard in initSideContainer, validateFields good, calling setData");
-  //   setData();
-  //   console.log("Finished setData, in editCard in initSideContainer, validateFields good");
-  //   console.log("In editCard in initSideContainer, validateFields good, calling refreshCard");
-  //   refreshCard(index);
-  //   console.log("Finished refreshCard, in editCard in initSideContainer, validateFields good, returning TRUE");
-  //   console.log("End of editCard in initSideContainer");
-  //
-  //   return true;
-  // }
+  function editCard(index) {
+    console.log("Arrived in editCard in initSideContainer");
+    console.log("In editCard in initSideContainer, calling validateFields");
+    if (!validateFields()) {
+      console.log("In editCard in initSideContainer, validateFields FAILED, returning FALSE");
+      console.log("End of editCard in initSideContainer");
+      return false;
+    }
+
+    data["cards"][index - 1]["url"] = url;
+    data["cards"][index - 1]["name"] = title;
+    data["cards"][index - 1]["icon"] = imageData;
+
+    console.log("In editCard in initSideContainer, validateFields good, calling setData");
+    setData();
+    console.log("Finished setData, in editCard in initSideContainer, validateFields good");
+    console.log("In editCard in initSideContainer, validateFields good, calling refreshCard");
+    refreshCard(index);
+    console.log("Finished refreshCard, in editCard in initSideContainer, validateFields good, returning TRUE");
+    console.log("End of editCard in initSideContainer");
+
+    return true;
+  }
 
   function validateFields() {
     console.log("Arrived in validateFields in initSideContainer");
@@ -876,19 +876,19 @@ function initSideContainer(type, index) {
     return true;
   }
 
-  // function fillFields(index) {
-  //   console.log("Arrived in fillFields in initSideContainer");
-  //   url = data["cards"][index - 1]["url"];
-  //   title = data["cards"][index - 1]["name"];
-  //   imageData = data["cards"][index - 1]["icon"];
-  //   inputURL.value = url;
-  //   inputURL.text = url;
-  //   inputTitle.value = title;
-  //   inputTitle.text = title;
-  //   previewTitle.innerHTML = title;
-  //   previewImage.src = imageData;
-  //   console.log("End of fillFields in initSideContainer");
-  // }
+  function fillFields(index) {
+    console.log("Arrived in fillFields in initSideContainer");
+    url = data["cards"][index - 1]["url"];
+    title = data["cards"][index - 1]["name"];
+    imageData = data["cards"][index - 1]["icon"];
+    inputURL.value = url;
+    inputURL.text = url;
+    inputTitle.value = title;
+    inputTitle.text = title;
+    previewTitle.innerHTML = title;
+    previewImage.src = imageData;
+    console.log("End of fillFields in initSideContainer");
+  }
 
   function emptyFields() {
     console.log("Arrived in emptyFields in initSideContainer");
