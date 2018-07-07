@@ -255,7 +255,7 @@ function setBackgroundOptions() {
   });
 
   color.addEventListener("input", function() {
-    if ((color.charAt(0) === "#" && color.value.length === 7) || (color.charAt(0) === "#" && color.value.length === 4)) {
+    if ((color.value.charAt(0) === "#" && color.value.length === 7) || (color.value.charAt(0) === "#" && color.value.length === 4)) {
       data["background-color"] = color.value;
       setData();
     } else {
@@ -293,7 +293,7 @@ function setHeaderOptions() {
   var timeOfDay = document.getElementById("show-timeofday");
 
   headerBackgroundColor.addEventListener("input", function() {
-    if ((headerBackgroundColor.charAt(0) === "#" && headerBackgroundColor.value.length === 7) || (headerBackgroundColor.charAt(0) === "#" && headerBackgroundColor.value.length === 4)) {
+    if ((headerBackgroundColor.value.charAt(0) === "#" && headerBackgroundColor.value.length === 7) || (headerBackgroundColor.value.charAt(0) === "#" && headerBackgroundColor.value.length === 4)) {
       data["header-background-color"] = headerBackgroundColor.value;
       setData();
     } else {
@@ -303,7 +303,7 @@ function setHeaderOptions() {
   });
 
   headerFontColor.addEventListener("input", function() {
-    if ((headerFontColor.charAt(0) === "#" && headerFontColor.value.length === 7) || (headerFontColor.charAt(0) === "#" && headerFontColor.value.length === 4)) {
+    if ((headerFontColor.value.charAt(0) === "#" && headerFontColor.value.length === 7) || (headerFontColor.value.charAt(0) === "#" && headerFontColor.value.length === 4)) {
       data["header-font-color"] = headerFontColor.value;
       setData();
     } else {
@@ -425,7 +425,7 @@ function setShortcutOptions() {
   });
 
   backgroundColor.addEventListener("input", function() {
-    if ((backgroundColor.charAt(0) === "#" && backgroundColor.value.length === 7) || (backgroundColor.charAt(0) === "#" && backgroundColor.value.length === 4)) {
+    if ((backgroundColor.value.charAt(0) === "#" && backgroundColor.value.length === 7) || (backgroundColor.value.charAt(0) === "#" && backgroundColor.value.length === 4)) {
       data["card-background-color"] = backgroundColor.value;
       setData();
     } else {
@@ -435,7 +435,7 @@ function setShortcutOptions() {
   });
 
   fontColor.addEventListener("input", function() {
-    if ((fontColor.charAt(0) === "#" && fontColor.value.length === 7) || (fontColor.charAt(0) === "#" && fontColor.value.length === 4)) {
+    if ((fontColor.value.charAt(0) === "#" && fontColor.value.length === 7) || (fontColor.value.charAt(0) === "#" && fontColor.value.length === 4)) {
       data["card-font-color"] = fontColor.value;
       setData();
     } else {
@@ -492,14 +492,14 @@ function manageData() {
 
   reset.addEventListener("click", function() {
     if (confirm("Are you sure you want to reset all of the shortcuts?")) {
-      data.cards = defaultData.cards;
+      data["cards"] = defaultData["cards"];
       setData();
     }
   });
 
   delet.addEventListener("click", function() {
     if (confirm("Are you sure you want to delete all shortcuts?")) {
-      data.cards = {};
+      data["cards"] = {};
       setData();
     }
   });
