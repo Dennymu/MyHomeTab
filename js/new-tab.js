@@ -92,7 +92,8 @@ var defaultData = {
     }
   },
   "header-background-color": "#fafafa",
-  "header-font-color": "000000",
+  "header-font-color": "#333333",
+  "header-float-font-color": "#ffffff",
   "show-header": true,
   "show-clock": true,
   "time": {
@@ -213,6 +214,10 @@ function validateData() {
     console.log("card-width was undefined, value is now " + data["card-width"]);
   }
 
+  if (data["header-float-font-color"] === undefined) {
+    data["header-float-font-color"] = "#ffffff";
+  }
+
   console.log("In validateData, calling setData");
   setData();
   console.log("Finished setData, in validateData");
@@ -259,6 +264,7 @@ function hasHeader() {
     var timeHeader = document.getElementsByClassName("header-float-time")[0];
     var floatInfo = document.getElementsByClassName("float-info-overlay")[0];
     floatSettings.style.display = "block";
+    floatSettings.style.color = data["header-float-font-color"];
     loader.style.top = "0px";
     floatInfo.addEventListener("click", initLightBox);
     console.log("In hasHeader with show-header NOT active, calling hasClock");

@@ -88,7 +88,8 @@ var defaultData = {
     }
   },
   "header-background-color": "#fafafa",
-  "header-font-color": "000000",
+  "header-font-color": "#333333",
+  "header-float-font-color": "#ffffff",
   "show-header": true,
   "show-clock": true,
   "time": {
@@ -170,6 +171,7 @@ function getBackgroundOptions() {
 function getHeaderOptions() {
   var headerBackgroundColor = document.getElementById("header-background-color");
   var headerFontColor = document.getElementById("header-font-color");
+  var floatFontColor = document.getElementById("header-float-font-color");
   var header = document.getElementById("show-header");
   var clock = document.getElementById("show-clock");
   var format = document.getElementById("time-format");
@@ -182,6 +184,7 @@ function getHeaderOptions() {
 
   headerBackgroundColor.value = data["header-background-color"];
   headerFontColor.value = data["header-font-color"];
+  floatFontColor.value = data["header-float-font-color"];
 
   if (data["show-header"]) {
     header.checked = true;
@@ -284,6 +287,7 @@ function setBackgroundOptions() {
 function setHeaderOptions() {
   var headerBackgroundColor = document.getElementById("header-background-color");
   var headerFontColor = document.getElementById("header-font-color");
+  var floatFontColor = document.getElementById("header-float-font-color");
   var header = document.getElementById("show-header");
   var clock = document.getElementById("show-clock");
   var format = document.getElementById("time-format");
@@ -309,7 +313,17 @@ function setHeaderOptions() {
       data["header-font-color"] = headerFontColor.value;
       setData();
     } else {
-      data["header-font-color"] = "#000000";
+      data["header-font-color"] = "#333333";
+      setData();
+    }
+  });
+
+  floatFontColor.addEventListener("input", function() {
+    if ((floatFontColor.value.charAt(0) === "#" && floatFontColor.value.length === 7) || (floatFontColor.value.charAt(0) === "#" && floatFontColor.value.length === 4)) {
+      data["header-float-font-color"] = floatFontColor.value;
+      setData();
+    } else {
+      data["header-float-font-color"] = "#ffffff";
       setData();
     }
   });
@@ -508,6 +522,7 @@ function setShortcutOptions() {
 
 function manageData() {
   var reset = document.getElementById("reset-shortcuts");
+  var resetAll = document.getElementById("reset-all");
   var delet = document.getElementById("delete-shortcuts");
   var download = document.getElementById("download-data");
   var upload = document.getElementById("upload-data");
@@ -516,6 +531,16 @@ function manageData() {
     if (confirm("Are you sure you want to reset all of the shortcuts?")) {
       data["cards"] = defaultData["cards"];
       setData();
+    }
+  });
+
+  resetAll.addEventListener("click", function() {
+    if (confirm("Are you sure you want to reset all of your settings?")) {
+      if (confirm("Are you really sure? It cannot be undone!")) {
+        data = defaultData;
+        setData();
+        window.location.reload();
+      }
     }
   });
 
