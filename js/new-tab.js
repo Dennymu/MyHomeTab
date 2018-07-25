@@ -472,6 +472,7 @@ function initCardOptions() {
   console.log("In initCardOptions, calling cardBackground");
   var background = cardBackground();
   console.log("Finished cardBackground, in initCardOptions");
+  cardOpacity();
 
   for (var i = 0; i < cards.length; i++) {
     cards[i].style.opacity = data["card-opacity"];
@@ -482,6 +483,16 @@ function initCardOptions() {
     cards[i].style.width = data["card-width"];
     cards[i].childNodes[1].style.width = data["card-width"];
     cards[i].classList.add("fade-in-card");
+  }
+
+  function cardOpacity() {
+    var css = '.fade-in-card{-webkit-animation: fade-in-card .3s cubic-bezier(.39, .575, .565, 1) both;animation: fade-in-card .3s cubic-bezier(.39, .575, .565, ' + data["card-opacity"] + ') both}@-webkit-keyframes fade-in-card {0% {opacity: 0}100% {opacity: ' + data["card-opacity"] + '}}@keyframes fade-in-card {0% {opacity: 0}100% {opacity: ' + data["card-opacity"] + '}}';
+    var head = document.head || document.getElementsByTagName('head')[0];
+    var style = document.createElement('style');
+
+    style.type = 'text/css';
+    style.appendChild(document.createTextNode(css));
+    head.appendChild(style);
   }
 
   function cardBackground() {
