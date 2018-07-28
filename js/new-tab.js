@@ -249,10 +249,15 @@ function hasHeader() {
     console.log("data[\"show-header\"] is active");
     var dateHeader = document.getElementsByClassName("header-date")[0];
     var timeHeader = document.getElementsByClassName("header-time")[0];
-    var headerInfo = document.getElementsByClassName("header-info-overlay")[0];
+    var headerInfo = document.getElementsByClassName("header-info")[0];
+    var headerSettings = document.getElementsByClassName("header-settings")[0];
+    var headerAdd = document.getElementsByClassName("header-add")[0];
     header.style.display = "block";
     header.style.backgroundColor = data["header-background-color"];
     header.style.color = data["header-font-color"];
+    headerSettings.style.color = data["header-font-color"];
+    headerInfo.style.color = data["header-font-color"];
+    headerAdd.style.color = data["header-font-color"];
     loader.style.top = "40px";
     headerInfo.addEventListener("click", initLightBox);
     console.log("In hasHeader with show-header active, calling hasClock");
@@ -262,9 +267,14 @@ function hasHeader() {
     console.log("data[\"show-header\" is NOT active]");
     var dateHeader = document.getElementsByClassName("header-float-date")[0];
     var timeHeader = document.getElementsByClassName("header-float-time")[0];
-    var floatInfo = document.getElementsByClassName("float-info-overlay")[0];
+    var floatInfo = document.getElementsByClassName("float-info")[0];
+    var floatOptions = document.getElementsByClassName("float-settings")[0];
+    var floatAdd = document.getElementsByClassName("float-add")[0];
     floatSettings.style.display = "block";
     floatSettings.style.color = data["header-float-font-color"];
+    floatOptions.style.color = data["header-float-font-color"];
+    floatAdd.style.color = data["header-float-font-color"];
+    floatInfo.style.color = data["header-float-font-color"];
     loader.style.top = "0px";
     floatInfo.addEventListener("click", initLightBox);
     console.log("In hasHeader with show-header NOT active, calling hasClock");
@@ -307,8 +317,8 @@ function initCards() {
     html += "<img class='shortcut-icon' alt='" + data["cards"][cardKeys[i]]["name"] + " shortcut' src='" + data["cards"][cardKeys[i]]["icon"] + "' draggable='false' />";
     html += "<span class='shortcut-name'>" + data["cards"][cardKeys[i]]["name"] + "</span>";
     html += "<div class='shortcut-manager'>";
-    html += "<img class='shortcut-edit' alt='Edit icon' src='images/add_icon.png'>";
-    html += "<img class='shortcut-delete' alt='Delete icon' src='images/delete_icon.png'>";
+    html += "<div class='shortcut-edit'><i class='fas fa-edit'></i></div>";
+    html += "<div class='shortcut-delete'><i class='fas fa-trash'></i></div>";
     html += "</div>";
     html += "</div>";
     html += "</a>";
@@ -339,8 +349,8 @@ function initCards() {
 
 function initAddCard() {
   console.log("Arrived in initAddCard");
-  var headerAdd = document.getElementsByClassName("header-add-overlay")[0];
-  var floatAdd = document.getElementsByClassName("float-add-overlay")[0];
+  var headerAdd = document.getElementsByClassName("header-add")[0];
+  var floatAdd = document.getElementsByClassName("float-add")[0];
   headerAdd.addEventListener("click", function headerAddListener() {
     console.log("In initAddCard, headerAdd click event activated, calling showSideContainer");
     showSideContainer("add");

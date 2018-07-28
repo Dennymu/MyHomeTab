@@ -50,7 +50,7 @@ body {
 }
 
 .header-weather, .header-date, .header-time {
-  font-size: 18px;
+  font-size: 15px;
   vertical-align: super;
 }
 
@@ -71,44 +71,23 @@ body {
 }
 
 .header-settings, .float-settings, .header-add, .float-add, .header-info, .float-info {
-  background-color: #1B8ADB;
   border-radius: 100px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
   height: 25px;
   margin-left: 10px;
   margin-right: 10px;
   transition: .15s ease-out;
   vertical-align: middle;
   width: 25px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.header-settings:hover, .header-add:hover, .header-info:hover {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
 .header-add, .float-add, .header-info, .float-info {
   margin-right: 0;
-}
-
-.header-settings-overlay, .float-settings-overlay, .header-add-overlay, .float-add-overlay, .header-info-overlay, .float-info-overlay {
-  border-radius: 100px;
-  height: 25px;
-  position: absolute;
-  right: 10px;
-  width: 25px;
-}
-
-.header-info-overlay, .float-info-overlay {
-  right: 48px;
-}
-
-.header-add-overlay, .float-add-overlay {
-  right: 85.5px;
-}
-
-.float-settings-overlay {
-  right: 10.5px;
-  top: 0;
-}
-
-.header-settings-overlay:hover, .float-settings-overlay:hover, .header-add-overlay:hover, .float-add-overlay:hover, .header-info-overlay:hover, .float-info-overlay:hover {
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
 }
 
 .float-header {
@@ -190,12 +169,16 @@ body {
 }
 
 .shortcut-edit, .shortcut-delete {
-  background-color: #1B8ADB;
+  background-color: #ffffff;
   border-radius: 100px;
+  display: inline-block;
   height: 20px;
   margin-right: 3px;
   transition: .15s ease-out;
   width: 20px;
+  font-size: 12px;
+  text-align: center;
+  padding-top: 1px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
@@ -426,7 +409,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #lightbox-close:hover, #lightbox-save:hover {
-  background-color: #E57373;
+  background-color: #1B8ADB;
 }
 
 .slide-in-fwd-top {

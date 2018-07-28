@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" href="fontawesome/css/fontawesome.min.css">
+  <link rel="stylesheet" href="fontawesome/css/solid.min.css">
   <title>New Tab</title>
 </head>
 
@@ -16,13 +18,10 @@
     <div class="header-right">
       <span class="header-date">Wednesday, March 3, 2018</span>
       <span class="header-time">12:00:00</span>
-      <img class="header-add" alt="Add shortcut icon" src="images/add_icon.png" />
-      <div class="header-add-overlay waves-effect waves-light"></div>
-      <img class="header-info" alt="Extension info icon" src="images/question_icon.png" />
-      <div class="header-info-overlay waves-effect waves-light"></div>
+      <div class="header-add waves-effect waves-blue"><i class="fas fa-edit"></i></div>
+      <div class="header-info waves-effect waves-blue"><i class="fas fa-question"></i></div>
       <a href="options.html">
-        <img class="header-settings" alt="Settings icon" src="images/gear_icon.png" />
-        <div class="header-settings-overlay waves-effect waves-light"></div>
+        <div class="header-settings waves-effect waves-blue"><i class="fas fa-cog"></i></div>
       </a>
     </div>
   </div>
@@ -32,13 +31,10 @@
       <span class="header-float-date">Wednesday, March 3, 2018</span>
       <span class="header-float-time">12:00:00</span>
     </div>
-    <img class="float-add" alt="Add shortcut icon" src="images/add_icon.png" />
-    <div class="float-add-overlay waves-effect waves-light"></div>
-    <img class="float-info" alt="Extension info icon" src="images/question_icon.png" />
-    <div class="float-info-overlay waves-effect waves-light"></div>
+    <div class="float-add waves-effect waves-light"><i class="fas fa-edit"></i></div>
+    <div class="float-info waves-effect waves-light"><i class="fas fa-question"></i></div>
     <a href="options.html">
-      <img class="float-settings" alt="Settings icon" src="images/gear_icon.png" />
-      <div class="float-settings-overlay waves-effect waves-light"></div>
+      <div class="float-settings waves-effect waves-light"><i class="fas fa-cog"></i></div>
     </a>
   </div>
 
@@ -110,5 +106,7 @@
 <script src="js/materialize.min.js"></script>
 <script src="js/sortable.min.js"></script>
 <script src="js/new-tab.js"></script>
+<script defer src="fontawesome/js/solid.min.js"></script>
+<script defer src="fontawesome/js/fontawesome.min.js"></script>
 
 </html>

@@ -554,7 +554,7 @@ function manageData() {
   download.addEventListener("click", function(e) {
     var uriContent = "data:application/octet-stream," + encodeURIComponent(JSON.stringify(data));
     e.target.href = uriContent;
-    e.target.download = "myhometabdata.txt";
+    e.target.download = "myhometabdata";
   });
 
   upload.addEventListener("change", function(e) {
