@@ -20,7 +20,7 @@
 
     <div class="settings-section">
       <div class="settings-title">Background</div>
-      <p class="settings-description">You can use a color or an image as a background. To start, choose whether you'd like an image or color. Then input the hex color code or choose an image from a local file. All options will probably save automatically, no need to worry.</p>
+      <p class="settings-description">You can use a color or an image as a background. To start, choose whether you'd like an image or color. Then input the hex color code or choose an image from a local file. Once finished, press "Save Settings" at the bottom right.</p>
       <div class="settings-form center-align">
         <label style="margin-right: 10px;">
           <input id="background-color-option" class="with-gap" name="group1" type="radio" />
@@ -187,13 +187,21 @@
       <div class="settings-form">
         <br>
         <a href="https://www.paypal.me/dennymu">
-          <div id="save-btn" class="btn btn-full btn-margin-right waves-effect waves-light">Paypal</div>
+          <div class="btn btn-full btn-margin-right waves-effect waves-light">Paypal</div>
         </a>
       </div>
     </div>
-
     <br>
   </div>
+
+  <div class="settings-progress-container">
+    <div class="progress">
+      <div class="indeterminate"></div>
+    </div>
+  </div>
+
+  <div id="save-btn" class="btn waves-effect waves-light">Save Settings</div>
+
 </body>
 
 <script src="js/jquery-3.3.1.min.js"></script>

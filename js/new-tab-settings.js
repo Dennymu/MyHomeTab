@@ -9,6 +9,7 @@ var defaultData = {
   "card-font-color": "#333333",
   "card-height": "140px",
   "card-opacity": "1",
+  "card-reset": false,
   "card-width": "150px",
   "cards": {
     "0": {
@@ -122,11 +123,12 @@ function getData() {
   });
 }
 
-function setData() {
+function setData(progress) {
   chrome.storage.local.set(data, function() {
     if (chrome.runtime.lastError) {
       console.log(chrome.runtime.lastError);
     }
+    progress.style.visibility = "hidden";
   });
 }
 
@@ -147,9 +149,41 @@ function initSettings() {
     }
   });
 
+  var saveBtn = document.getElementById("save-btn");
+  saveBtn.addEventListener("click", function() {
+    var progress = document.getElementsByClassName("settings-progress-container")[0];
+    progress.style.visibility = "visible";
+    compareData(progress);
+  });
+
   //Set header in New Tab Settings according to setting for main MyHomeTab
-  document.getElementById("settings-header").style.color = data["header-font-color"];
-  document.getElementById("settings-header").style.backgroundColor = data["header-background-color"];
+  //document.getElementById("settings-header").style.color = data["header-font-color"];
+  //document.getElementById("settings-header").style.backgroundColor = data["header-background-color"];
+}
+
+function compareData(progress) {
+  var currentData;
+  chrome.storage.local.get(null, function(userData) {
+    if (chrome.runtime.lastError) {
+      currentData = defaultData;
+      console.log(chrome.runtime.lastError);
+      return;
+    }
+
+    if (Object.keys(userData).length === 0) {
+      currentData = defaultData;
+    } else {
+      currentData = userData;
+    }
+
+    if (data["card-reset"]) {
+      data["card-reset"] = false;
+    } else {
+      data["cards"] = currentData["cards"];
+    }
+
+    setData(progress);
+  });
 }
 
 function getBackgroundOptions() {
@@ -248,24 +282,20 @@ function setBackgroundOptions() {
   radioColor.addEventListener("change", function() {
     if (radioColor.checked) {
       data["background-option"] = "color";
-      setData();
     }
   });
 
   radioImage.addEventListener("change", function() {
     if (radioImage.checked) {
       data["background-option"] = "image";
-      setData();
     }
   });
 
   color.addEventListener("input", function() {
     if ((color.value.charAt(0) === "#" && color.value.length === 7) || (color.value.charAt(0) === "#" && color.value.length === 4)) {
       data["background-color"] = color.value;
-      setData();
     } else {
       data["background-color"] = "#03a9f4";
-      setData();
     }
   });
 
@@ -275,7 +305,6 @@ function setBackgroundOptions() {
 
     reader.addEventListener("load", function() {
       data["background-image"] = reader.result;
-      setData();
     }, false);
 
     if (file) {
@@ -301,120 +330,96 @@ function setHeaderOptions() {
   headerBackgroundColor.addEventListener("input", function() {
     if ((headerBackgroundColor.value.charAt(0) === "#" && headerBackgroundColor.value.length === 7) || (headerBackgroundColor.value.charAt(0) === "#" && headerBackgroundColor.value.length === 4)) {
       data["header-background-color"] = headerBackgroundColor.value;
-      setData();
     } else {
       data["header-background-color"] = "#fafafa";
-      setData();
     }
   });
 
   headerFontColor.addEventListener("input", function() {
     if ((headerFontColor.value.charAt(0) === "#" && headerFontColor.value.length === 7) || (headerFontColor.value.charAt(0) === "#" && headerFontColor.value.length === 4)) {
       data["header-font-color"] = headerFontColor.value;
-      setData();
     } else {
       data["header-font-color"] = "#333333";
-      setData();
     }
   });
 
   floatFontColor.addEventListener("input", function() {
     if ((floatFontColor.value.charAt(0) === "#" && floatFontColor.value.length === 7) || (floatFontColor.value.charAt(0) === "#" && floatFontColor.value.length === 4)) {
       data["header-float-font-color"] = floatFontColor.value;
-      setData();
     } else {
       data["header-float-font-color"] = "#ffffff";
-      setData();
     }
   });
 
   header.addEventListener("change", function(e) {
     if (header.checked) {
       data["show-header"] = true;
-      setData();
     } else {
       data["show-header"] = false;
-      setData();
     }
   });
 
   clock.addEventListener("change", function(e) {
     if (clock.checked) {
       data["show-clock"] = true;
-      setData();
     } else {
       data["show-clock"] = false;
-      setData();
     }
   });
 
   format.addEventListener("change", function(e) {
     if (format.checked) {
       data["time"]["timeFormat"] = "12";
-      setData();
     } else {
       data["time"]["timeFormat"] = "24";
-      setData();
     }
   });
 
   weekday.addEventListener("change", function(e) {
     if (weekday.checked) {
       data["time"]["show-weekday"] = true;
-      setData();
     } else {
       data["time"]["show-weekday"] = false;
-      setData();
     }
   });
 
   month.addEventListener("change", function(e) {
     if (month.checked) {
       data["time"]["show-month"] = true;
-      setData();
     } else {
       data["time"]["show-month"] = false;
-      setData();
     }
   });
 
   day.addEventListener("change", function(e) {
     if (day.checked) {
       data["time"]["show-day"] = true;
-      setData();
     } else {
       data["time"]["show-day"] = false;
-      setData();
     }
   });
 
   year.addEventListener("change", function(e) {
     if (year.checked) {
       data["time"]["show-year"] = true;
-      setData();
     } else {
       data["time"]["show-year"] = false;
-      setData();
     }
   });
 
   time.addEventListener("change", function(e) {
     if (time.checked) {
       data["time"]["show-time"] = true;
-      setData();
     } else {
       data["time"]["show-time"] = false;
-      setData();
     }
   });
 
   timeOfDay.addEventListener("change", function(e) {
     if (timeOfDay.checked) {
       data["time"]["show-timeofday"] = true;
-      setData();
     } else {
       data["time"]["show-timeofday"] = false;
-      setData();
     }
   });
 }
@@ -433,31 +438,25 @@ function setShortcutOptions() {
 
   opacity.addEventListener("change", function() {
     data["card-opacity"] = (opacity.value / 100).toString();
-    setData();
   });
 
   backgroundOpacity.addEventListener("change", function() {
     data["card-background-opacity"] = (backgroundOpacity.value / 100).toString();
-    setData();
   });
 
   backgroundColor.addEventListener("input", function() {
     if ((backgroundColor.value.charAt(0) === "#" && backgroundColor.value.length === 7) || (backgroundColor.value.charAt(0) === "#" && backgroundColor.value.length === 4)) {
       data["card-background-color"] = backgroundColor.value;
-      setData();
     } else {
       data["card-background-color"] = defaultData["card-background-color"];
-      setData();
     }
   });
 
   fontColor.addEventListener("input", function() {
     if ((fontColor.value.charAt(0) === "#" && fontColor.value.length === 7) || (fontColor.value.charAt(0) === "#" && fontColor.value.length === 4)) {
       data["card-font-color"] = fontColor.value;
-      setData();
     } else {
       data["card-font-color"] = defaultData["card-font-color"];
-      setData();
     }
   });
 
@@ -467,7 +466,6 @@ function setShortcutOptions() {
 
     reader.addEventListener("load", function() {
       data["card-default-icon"] = reader.result;
-      setData();
     }, false);
 
     if (file) {
@@ -477,26 +475,21 @@ function setShortcutOptions() {
 
   iconReset.addEventListener("click", function() {
     data["card-default-icon"] = defaultData["card-default-icon"];
-    setData();
   });
 
   height.addEventListener("input", function() {
     if (numReg.test(height.value)) {
       data["card-height"] = height.value + "px";
-      setData();
     } else {
       data["card-height"] = defaultData["card-height"];
-      setData();
     }
   });
 
   width.addEventListener("input", function() {
     if (numReg.test(width.value)) {
       data["card-width"] =  width.value + "px";
-      setData();
     } else {
       data["card-width"] = defaultData["card-width"];
-      setData();
     }
   });
 
@@ -515,7 +508,6 @@ function setShortcutOptions() {
       height.value = defaultData["card-height"].slice(0, defaultData["card-height"].length - 2);
       data["card-width"] = defaultData["card-width"];
       width.value = defaultData["card-width"].slice(0, defaultData["card-width"].length - 2);
-      setData();
     }
   });
 }
@@ -530,15 +522,15 @@ function manageData() {
   reset.addEventListener("click", function() {
     if (confirm("Are you sure you want to reset all of the shortcuts?")) {
       data["cards"] = defaultData["cards"];
-      setData();
+      data["card-reset"] = true;
     }
   });
 
   resetAll.addEventListener("click", function() {
-    if (confirm("Are you sure you want to reset all of your settings?")) {
+    if (confirm("Are you sure you want to reset all of your settings, including your shortcuts?")) {
       if (confirm("Are you really sure? It cannot be undone!")) {
         data = defaultData;
-        setData();
+        data["card-reset"] = true;
         window.location.reload();
       }
     }
@@ -547,7 +539,6 @@ function manageData() {
   delet.addEventListener("click", function() {
     if (confirm("Are you sure you want to delete all shortcuts?")) {
       data["cards"] = {};
-      setData();
     }
   });
 
@@ -565,7 +556,6 @@ function manageData() {
     reader.addEventListener("load", function(e) {
       uploadData = JSON.parse(reader.result);
       data = uploadData;
-      setData();
       alert("Your data has been uploaded.");
     }, false);
 

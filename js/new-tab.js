@@ -13,6 +13,7 @@ var defaultData = {
   "card-font-color": "#333333",
   "card-height": "140px",
   "card-opacity": "1",
+  "card-reset": false,
   "card-width": "150px",
   "cards": {
     "0": {
@@ -216,6 +217,10 @@ function validateData() {
 
   if (data["header-float-font-color"] === undefined) {
     data["header-float-font-color"] = "#ffffff";
+  }
+
+  if (data["card-reset"] === undefined) {
+    data["card-reset"] = false;
   }
 
   console.log("In validateData, calling setData");
