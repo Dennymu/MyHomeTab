@@ -148,21 +148,17 @@ function initSettings() {
       window.history.back();
     }
   });
-
-  var saveBtn = document.getElementById("save-btn");
-  saveBtn.addEventListener("click", function() {
-    var progress = document.getElementsByClassName("settings-progress-container")[0];
-    progress.style.visibility = "visible";
-    compareData(progress);
-  });
-
   //Set header in New Tab Settings according to setting for main MyHomeTab
   //document.getElementById("settings-header").style.color = data["header-font-color"];
   //document.getElementById("settings-header").style.backgroundColor = data["header-background-color"];
 }
 
-function compareData(progress) {
+function compareData() {
+  var progress = document.getElementsByClassName("settings-progress-container")[0];
   var currentData;
+
+  progress.style.visibility = "visible";
+
   chrome.storage.local.get(null, function(userData) {
     if (chrome.runtime.lastError) {
       currentData = defaultData;
@@ -282,20 +278,24 @@ function setBackgroundOptions() {
   radioColor.addEventListener("change", function() {
     if (radioColor.checked) {
       data["background-option"] = "color";
+      compareData();
     }
   });
 
   radioImage.addEventListener("change", function() {
     if (radioImage.checked) {
       data["background-option"] = "image";
+      compareData();
     }
   });
 
   color.addEventListener("input", function() {
     if ((color.value.charAt(0) === "#" && color.value.length === 7) || (color.value.charAt(0) === "#" && color.value.length === 4)) {
       data["background-color"] = color.value;
+      compareData();
     } else {
       data["background-color"] = "#03a9f4";
+      compareData();
     }
   });
 
@@ -305,6 +305,7 @@ function setBackgroundOptions() {
 
     reader.addEventListener("load", function() {
       data["background-image"] = reader.result;
+      compareData();
     }, false);
 
     if (file) {
@@ -330,96 +331,120 @@ function setHeaderOptions() {
   headerBackgroundColor.addEventListener("input", function() {
     if ((headerBackgroundColor.value.charAt(0) === "#" && headerBackgroundColor.value.length === 7) || (headerBackgroundColor.value.charAt(0) === "#" && headerBackgroundColor.value.length === 4)) {
       data["header-background-color"] = headerBackgroundColor.value;
+      compareData();
     } else {
       data["header-background-color"] = "#fafafa";
+      compareData();
     }
   });
 
   headerFontColor.addEventListener("input", function() {
     if ((headerFontColor.value.charAt(0) === "#" && headerFontColor.value.length === 7) || (headerFontColor.value.charAt(0) === "#" && headerFontColor.value.length === 4)) {
       data["header-font-color"] = headerFontColor.value;
+      compareData();
     } else {
       data["header-font-color"] = "#333333";
+      compareData();
     }
   });
 
   floatFontColor.addEventListener("input", function() {
     if ((floatFontColor.value.charAt(0) === "#" && floatFontColor.value.length === 7) || (floatFontColor.value.charAt(0) === "#" && floatFontColor.value.length === 4)) {
       data["header-float-font-color"] = floatFontColor.value;
+      compareData();
     } else {
       data["header-float-font-color"] = "#ffffff";
+      compareData();
     }
   });
 
   header.addEventListener("change", function(e) {
     if (header.checked) {
       data["show-header"] = true;
+      compareData();
     } else {
       data["show-header"] = false;
+      compareData();
     }
   });
 
   clock.addEventListener("change", function(e) {
     if (clock.checked) {
       data["show-clock"] = true;
+      compareData();
     } else {
       data["show-clock"] = false;
+      compareData();
     }
   });
 
   format.addEventListener("change", function(e) {
     if (format.checked) {
       data["time"]["timeFormat"] = "12";
+      compareData();
     } else {
       data["time"]["timeFormat"] = "24";
+      compareData();
     }
   });
 
   weekday.addEventListener("change", function(e) {
     if (weekday.checked) {
       data["time"]["show-weekday"] = true;
+      compareData();
     } else {
       data["time"]["show-weekday"] = false;
+      compareData();
     }
   });
 
   month.addEventListener("change", function(e) {
     if (month.checked) {
       data["time"]["show-month"] = true;
+      compareData();
     } else {
       data["time"]["show-month"] = false;
+      compareData();
     }
   });
 
   day.addEventListener("change", function(e) {
     if (day.checked) {
       data["time"]["show-day"] = true;
+      compareData();
     } else {
       data["time"]["show-day"] = false;
+      compareData();
     }
   });
 
   year.addEventListener("change", function(e) {
     if (year.checked) {
       data["time"]["show-year"] = true;
+      compareData();
     } else {
       data["time"]["show-year"] = false;
+      compareData();
     }
   });
 
   time.addEventListener("change", function(e) {
     if (time.checked) {
       data["time"]["show-time"] = true;
+      compareData();
     } else {
       data["time"]["show-time"] = false;
+      compareData();
     }
   });
 
   timeOfDay.addEventListener("change", function(e) {
     if (timeOfDay.checked) {
       data["time"]["show-timeofday"] = true;
+      compareData();
     } else {
       data["time"]["show-timeofday"] = false;
+      compareData();
     }
   });
 }
@@ -438,25 +463,31 @@ function setShortcutOptions() {
 
   opacity.addEventListener("change", function() {
     data["card-opacity"] = (opacity.value / 100).toString();
+    compareData();
   });
 
   backgroundOpacity.addEventListener("change", function() {
     data["card-background-opacity"] = (backgroundOpacity.value / 100).toString();
+    compareData();
   });
 
   backgroundColor.addEventListener("input", function() {
     if ((backgroundColor.value.charAt(0) === "#" && backgroundColor.value.length === 7) || (backgroundColor.value.charAt(0) === "#" && backgroundColor.value.length === 4)) {
       data["card-background-color"] = backgroundColor.value;
+      compareData();
     } else {
       data["card-background-color"] = defaultData["card-background-color"];
+      compareData();
     }
   });
 
   fontColor.addEventListener("input", function() {
     if ((fontColor.value.charAt(0) === "#" && fontColor.value.length === 7) || (fontColor.value.charAt(0) === "#" && fontColor.value.length === 4)) {
       data["card-font-color"] = fontColor.value;
+      compareData();
     } else {
       data["card-font-color"] = defaultData["card-font-color"];
+      compareData();
     }
   });
 
@@ -466,6 +497,7 @@ function setShortcutOptions() {
 
     reader.addEventListener("load", function() {
       data["card-default-icon"] = reader.result;
+      compareData();
     }, false);
 
     if (file) {
@@ -475,21 +507,26 @@ function setShortcutOptions() {
 
   iconReset.addEventListener("click", function() {
     data["card-default-icon"] = defaultData["card-default-icon"];
+    compareData();
   });
 
   height.addEventListener("input", function() {
     if (numReg.test(height.value)) {
       data["card-height"] = height.value + "px";
+      compareData();
     } else {
       data["card-height"] = defaultData["card-height"];
+      compareData();
     }
   });
 
   width.addEventListener("input", function() {
     if (numReg.test(width.value)) {
       data["card-width"] =  width.value + "px";
+      compareData();
     } else {
       data["card-width"] = defaultData["card-width"];
+      compareData();
     }
   });
 
@@ -508,6 +545,7 @@ function setShortcutOptions() {
       height.value = defaultData["card-height"].slice(0, defaultData["card-height"].length - 2);
       data["card-width"] = defaultData["card-width"];
       width.value = defaultData["card-width"].slice(0, defaultData["card-width"].length - 2);
+      compareData();
     }
   });
 }
@@ -523,6 +561,7 @@ function manageData() {
     if (confirm("Are you sure you want to reset all of the shortcuts?")) {
       data["cards"] = defaultData["cards"];
       data["card-reset"] = true;
+      compareData();
     }
   });
 
@@ -531,7 +570,10 @@ function manageData() {
       if (confirm("Are you really sure? It cannot be undone!")) {
         data = defaultData;
         data["card-reset"] = true;
-        window.location.reload();
+        compareData();
+        setTimeout(function() {
+          window.location.reload();
+        }, 1000);
       }
     }
   });
@@ -539,6 +581,7 @@ function manageData() {
   delet.addEventListener("click", function() {
     if (confirm("Are you sure you want to delete all shortcuts?")) {
       data["cards"] = {};
+      compareData();
     }
   });
 
@@ -556,6 +599,7 @@ function manageData() {
     reader.addEventListener("load", function(e) {
       uploadData = JSON.parse(reader.result);
       data = uploadData;
+      compareData();
       alert("Your data has been uploaded.");
     }, false);
 
