@@ -384,8 +384,8 @@ function addCard(imageData, title, url) {
   html += "<img class='shortcut-icon' alt='" + title + " icon' src='" + imageData + "' draggable='false' />";
   html += "<span class='shortcut-name'>" + title + "</span>";
   html += "<div class='shortcut-manager'>";
-  html += "<img class='shortcut-edit' alt='Edit icon' src='images/add_icon.png'>";
-  html += "<img class='shortcut-delete' alt='Delete icon' src='images/delete_icon.png'>";
+  html += "<div class='shortcut-edit'><i class='fas fa-edit'></i></div>";
+  html += "<div class='shortcut-delete'><i class='fas fa-trash'></i></div>";
   html += "</div>";
   html += "</div>";
   html += "</a>";

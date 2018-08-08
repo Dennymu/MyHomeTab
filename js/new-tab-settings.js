@@ -472,7 +472,7 @@ function setShortcutOptions() {
   });
 
   backgroundColor.addEventListener("input", function() {
-    if ((backgroundColor.value.charAt(0) === "#" && backgroundColor.value.length === 7) || (backgroundColor.value.charAt(0) === "#" && backgroundColor.value.length === 4)) {
+    if (backgroundColor.value.charAt(0) === "#" && backgroundColor.value.length === 7) {
       data["card-background-color"] = backgroundColor.value;
       compareData();
     } else {
@@ -482,7 +482,7 @@ function setShortcutOptions() {
   });
 
   fontColor.addEventListener("input", function() {
-    if ((fontColor.value.charAt(0) === "#" && fontColor.value.length === 7) || (fontColor.value.charAt(0) === "#" && fontColor.value.length === 4)) {
+    if (fontColor.value.charAt(0) === "#" && fontColor.value.length === 7) {
       data["card-font-color"] = fontColor.value;
       compareData();
     } else {
@@ -581,6 +581,7 @@ function manageData() {
   delet.addEventListener("click", function() {
     if (confirm("Are you sure you want to delete all shortcuts?")) {
       data["cards"] = {};
+      data["card-reset"] = true;
       compareData();
     }
   });
@@ -599,6 +600,7 @@ function manageData() {
     reader.addEventListener("load", function(e) {
       uploadData = JSON.parse(reader.result);
       data = uploadData;
+      data["card-reset"] = true;
       compareData();
       alert("Your data has been uploaded.");
     }, false);
