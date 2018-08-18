@@ -13,6 +13,7 @@ var defaultData = {
   "card-font-color": "#333333",
   "card-height": "140px",
   "card-opacity": "1",
+  "card-reset": false,
   "card-width": "150px",
   "cards": {
     "0": {
@@ -218,6 +219,10 @@ function validateData() {
     data["header-float-font-color"] = "#ffffff";
   }
 
+  if (data["card-reset"] === undefined) {
+    data["card-reset"] = false;
+  }
+
   console.log("In validateData, calling setData");
   setData();
   console.log("Finished setData, in validateData");
@@ -379,8 +384,8 @@ function addCard(imageData, title, url) {
   html += "<img class='shortcut-icon' alt='" + title + " icon' src='" + imageData + "' draggable='false' />";
   html += "<span class='shortcut-name'>" + title + "</span>";
   html += "<div class='shortcut-manager'>";
-  html += "<img class='shortcut-edit' alt='Edit icon' src='images/add_icon.png'>";
-  html += "<img class='shortcut-delete' alt='Delete icon' src='images/delete_icon.png'>";
+  html += "<div class='shortcut-edit'><i class='fas fa-edit'></i></div>";
+  html += "<div class='shortcut-delete'><i class='fas fa-trash'></i></div>";
   html += "</div>";
   html += "</div>";
   html += "</a>";

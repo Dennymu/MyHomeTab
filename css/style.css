@@ -241,7 +241,7 @@ body {
 }
 
 .settings-title {
-  background-color: #ee6e73;
+  background-color: #eb493c;
   color: #fff;
   font-size: 20px;
   margin-bottom: 10px;
@@ -264,11 +264,16 @@ body {
 
 /*** RESOURCES ***/
 
-.progress-container {
+.progress-container, .settings-progress-container {
   position: absolute;
   top: 0;
   visibility: visible;
   width: 100%;
+}
+
+.settings-progress-container {
+  position: fixed;
+  visibility: hidden;
 }
 
 .progress {
@@ -322,7 +327,7 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label {
 }
 
 input[type=range]::-webkit-slider-runnable-track {
-  background-color: #ee6e73;
+  background-color: #eb493c;
 }
 
 input[type=range]+.thumb {
