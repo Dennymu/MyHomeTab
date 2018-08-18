@@ -262,17 +262,6 @@ body {
   margin-right: 20%;
 }
 
-#save-btn {
-  position: fixed;
-  right: 15px;
-  bottom: 15px;
-  background-color: #F44336;
-}
-
-#save-btn:hover {
-  background-color: #ee6e73;
-}
-
 /*** RESOURCES ***/
 
 .progress-container, .settings-progress-container {
