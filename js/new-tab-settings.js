@@ -1,8 +1,8 @@
 var data = null;
 var defaultData = {
   "background-color": "#03a9f4",
-  "background-image": "0",
-  "background-option": "color",
+  "background-image": "images/default_wallpaper.jpg",
+  "background-option": "image",
   "card-background-color": "#ffffff",
   "card-background-opacity": "1",
   "card-default-icon": "images/shortcut_icon.png",
@@ -91,7 +91,7 @@ var defaultData = {
   "header-background-color": "#fafafa",
   "header-font-color": "#333333",
   "header-float-font-color": "#ffffff",
-  "show-header": true,
+  "show-header": false,
   "show-clock": true,
   "time": {
     "timeFormat": "12",
@@ -136,6 +136,7 @@ function initSettings() {
   getBackgroundOptions();
   getHeaderOptions();
   getShortcutOptions();
+  initNavigation();
 
   setBackgroundOptions();
   setHeaderOptions();
@@ -255,6 +256,7 @@ function getHeaderOptions() {
 
 function getShortcutOptions() {
   var opacity = document.getElementById("card-opacity");
+
   var backgroundOpacity = document.getElementById("card-background-opacity");
   var backgroundColor = document.getElementById("card-background-color");
   var fontColor = document.getElementById("card-font-color");
@@ -267,6 +269,60 @@ function getShortcutOptions() {
   fontColor.value = data["card-font-color"];
   height.value = data["card-height"].slice(0, data["card-height"].length - 2);
   width.value = data["card-width"].slice(0, data["card-width"].length - 2);
+}
+
+function initNavigation() {
+  var nav = document.getElementsByClassName("settings-nav")[0].children;
+  var sections = document.getElementsByClassName("settings-section");
+  var currentSection = 0;
+
+  nav[currentSection].style.borderBottom = "2px solid #ffffff";
+  sections[currentSection].style.display = "block";
+
+  for (var i = 0; i < nav.length - 1; i++) {
+    nav[i].addEventListener("click", navClick);
+  }
+
+  function navClick(e) {
+    var nextSection = 0;
+    for (var i = 0; i < nav.length - 1; i++) {
+      if (e.target === nav[i]) {
+        nextSection = i;
+      }
+    }
+
+    if (nextSection === currentSection) { return; }
+
+    if (nextSection < currentSection) {
+      sections[currentSection].classList.add("slide-out-right");
+      setTimeout(function() {
+        sections[currentSection].classList.remove("slide-out-right");
+        sections[currentSection].style.display = "none";
+        nav[currentSection].style.borderBottom = "2px solid #0394D6";
+        sections[nextSection].classList.add("slide-in-left");
+        sections[nextSection].style.display = "block";
+        nav[nextSection].style.borderBottom = "2px solid #ffffff";
+        setTimeout(function() {
+          sections[nextSection].classList.remove("slide-in-left");
+          currentSection = nextSection;
+        }, 200);
+      }, 200);
+    } else {
+      sections[currentSection].classList.add("slide-out-left");
+      setTimeout(function() {
+        sections[currentSection].classList.remove("slide-out-left");
+        sections[currentSection].style.display = "none";
+        nav[currentSection].style.borderBottom = "2px solid #0394D6";
+        sections[nextSection].classList.add("slide-in-right");
+        sections[nextSection].style.display = "block";
+        nav[nextSection].style.borderBottom = "2px solid #ffffff";
+        setTimeout(function() {
+          sections[nextSection].classList.remove("slide-in-right");
+          currentSection = nextSection;
+        }, 200);
+      }, 200);
+    }
+  }
 }
 
 function setBackgroundOptions() {
