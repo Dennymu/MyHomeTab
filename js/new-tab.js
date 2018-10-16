@@ -9,12 +9,14 @@ var defaultData = {
   "background-option": "color",
   "card-background-color": "#ffffff",
   "card-background-opacity": "1",
+  "card-border-radius": "5px",
   "card-default-icon": "images/shortcut_icon.png",
   "card-font-color": "#333333",
-  "card-height": "140px",
+  "card-height": "90px",
   "card-opacity": "1",
   "card-reset": false,
-  "card-width": "150px",
+  "card-shadow": false,
+  "card-width": "100px",
   "cards": {
     "0": {
       "name": "Google",
@@ -179,11 +181,11 @@ function validateData() {
   }
 
   if (data["card-height"] === undefined) {
-    data["card-height"] = "140px";
+    data["card-height"] = "90px";
   }
 
   if (data["card-width"] === undefined) {
-    data["card-width"] = "150px";
+    data["card-width"] = "100px";
   }
 
   if (data["header-float-font-color"] === undefined) {
@@ -192,6 +194,14 @@ function validateData() {
 
   if (data["card-reset"] === undefined) {
     data["card-reset"] = false;
+  }
+
+  if (data["card-border-radius"] === undefined) {
+    data["card-border-radius"] = "5px";
+  }
+
+  if (data["card-shadow"] === undefined) {
+    data["card-shadow"] = false;
   }
 
   setData();
@@ -387,7 +397,9 @@ function removeCard(element) {
 function initCardOptions() {
   var cards = document.getElementsByClassName("shortcut-card");
   var cardNames = document.getElementsByClassName("shortcut-name");
+  var images = document.getElementsByClassName("shortcut-icon");
   var background = cardBackground();
+
 
   cardOpacity();
 
@@ -398,8 +410,16 @@ function initCardOptions() {
     cards[i].style.display = "block";
     cards[i].style.height = data["card-height"];
     cards[i].style.width = data["card-width"];
-    cards[i].childNodes[1].style.width = data["card-width"];
+    cards[i].style.borderRadius = data["card-border-radius"];
     cards[i].classList.add("fade-in-card");
+
+    if (!data["card-shadow"]) {
+      cards[i].parentNode.style.boxShadow = "none";
+    }
+
+    if (parseInt(data["card-width"].substring(0, 3)) < 150) {
+      cards[i].childNodes[1].style.fontSize = "12px";
+    }
   }
 
   function cardOpacity() {

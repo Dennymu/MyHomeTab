@@ -48,11 +48,11 @@
       <br><br>
       <div class="input-field col s6">
         <input placeholder="" id="background-color" type="text" class="validate">
-        <label for="background-color">Color - Hex Code</label>
+        <label id="color-label" for="background-color">Color - Hex Code</label>
       </div>
       <br>
       <div class="file-field input-field">
-        <div class="btn waves-effect waves-light">
+        <div id="background-image-btn" class="btn waves-effect waves-light">
           <span>Image</span>
           <input id="background-image" type="file">
         </div>
@@ -132,6 +132,11 @@
     <p>Get your shortcut card options here!</p>
     <div class="settings-form">
       <br><br>
+      <label>
+        <input id="card-shadow" type="checkbox" class="filled-in" />
+        <span style="color:#333">Card Shadow</span>
+      </label>
+      <br><br>
       Card Opacity
       <p class="range-field">
         <input type="range" id="card-opacity" min="0" max="100" />
@@ -155,6 +160,10 @@
       <div class="input-field col s6">
         <input placeholder="" id="card-width" type="text" class="validate">
         <label for="card-width">Card Width - Pixels</label>
+      </div>
+      <div class="input-field col s6">
+        <input placeholder="" id="card-border-radius" type="text" class="validate">
+        <label for="card-border-radius">Card Border Radius - Pixels</label>
       </div>
       <p class="settings-description" style="margin-top: 30px;">Change the default image when creating new shortcuts</p>
       <div class="file-field input-field">

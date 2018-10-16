@@ -5,12 +5,14 @@ var defaultData = {
   "background-option": "image",
   "card-background-color": "#ffffff",
   "card-background-opacity": "1",
+  "card-border-radius": "5px",
   "card-default-icon": "images/shortcut_icon.png",
   "card-font-color": "#333333",
-  "card-height": "140px",
+  "card-height": "90px",
   "card-opacity": "1",
   "card-reset": false,
-  "card-width": "150px",
+  "card-shadow": false,
+  "card-width": "100px",
   "cards": {
     "0": {
       "name": "Google",
@@ -187,16 +189,37 @@ function getBackgroundOptions() {
   var radioColor = document.getElementById("background-color-option");
   var radioImage = document.getElementById("background-image-option");
   var color = document.getElementById("background-color");
+  var colorLabel = document.getElementById("color-label");
+  var backgroundFile = document.getElementById("background-image-btn");
+  var backgroundText = document.getElementById("background-image-text");
 
   if (data["background-option"] === "color") {
     radioColor.checked = true;
     radioImage.checked = false;
     color.value = data["background-color"];
+    backgroundFile.style.display = "none";
+    backgroundText.style.display = "none";
   } else {
     radioColor.checked = false;
     radioImage.checked = true;
     color.value = data["background-color"];
+    color.style.display = "none";
+    colorLabel.style.display = "none";
   }
+
+  radioColor.addEventListener("click", function() {
+    backgroundFile.style.display = "none";
+    backgroundText.style.display = "none";
+    color.style.display = "block";
+    colorLabel.style.display = "block";
+  });
+
+  radioImage.addEventListener("click", function() {
+    color.style.display = "none";
+    colorLabel.style.display = "none";
+    backgroundFile.style.display = "block";
+    backgroundText.style.display = "block";
+  })
 }
 
 function getHeaderOptions() {
@@ -262,6 +285,8 @@ function getShortcutOptions() {
   var fontColor = document.getElementById("card-font-color");
   var height = document.getElementById("card-height");
   var width = document.getElementById("card-width");
+  var shadow = document.getElementById("card-shadow");
+  var borderRadius = document.getElementById("card-border-radius");
 
   opacity.value = parseFloat(data["card-opacity"], 10) * 100;
   backgroundOpacity.value = parseFloat(data["card-background-opacity"], 10) * 100;
@@ -269,6 +294,11 @@ function getShortcutOptions() {
   fontColor.value = data["card-font-color"];
   height.value = data["card-height"].slice(0, data["card-height"].length - 2);
   width.value = data["card-width"].slice(0, data["card-width"].length - 2);
+  borderRadius.value = data["card-border-radius"].slice(0, data["card-border-radius"].length - 2);
+
+  if (data["card-shadow"]) {
+    shadow.checked = true;
+  }
 }
 
 function initNavigation() {
@@ -294,33 +324,33 @@ function initNavigation() {
     if (nextSection === currentSection) { return; }
 
     if (nextSection < currentSection) {
-      sections[currentSection].classList.add("slide-out-right");
+      sections[currentSection].classList.add("slide-out-right-settings");
       setTimeout(function() {
-        sections[currentSection].classList.remove("slide-out-right");
+        sections[currentSection].classList.remove("slide-out-right-settings");
         sections[currentSection].style.display = "none";
         nav[currentSection].style.borderBottom = "2px solid #0394D6";
-        sections[nextSection].classList.add("slide-in-left");
+        sections[nextSection].classList.add("slide-in-left-settings");
         sections[nextSection].style.display = "block";
         nav[nextSection].style.borderBottom = "2px solid #ffffff";
         setTimeout(function() {
-          sections[nextSection].classList.remove("slide-in-left");
+          sections[nextSection].classList.remove("slide-in-left-settings");
           currentSection = nextSection;
-        }, 200);
-      }, 200);
+        }, 100);
+      }, 100);
     } else {
-      sections[currentSection].classList.add("slide-out-left");
+      sections[currentSection].classList.add("slide-out-left-settings");
       setTimeout(function() {
-        sections[currentSection].classList.remove("slide-out-left");
+        sections[currentSection].classList.remove("slide-out-left-settings");
         sections[currentSection].style.display = "none";
         nav[currentSection].style.borderBottom = "2px solid #0394D6";
-        sections[nextSection].classList.add("slide-in-right");
+        sections[nextSection].classList.add("slide-in-right-settings");
         sections[nextSection].style.display = "block";
         nav[nextSection].style.borderBottom = "2px solid #ffffff";
         setTimeout(function() {
-          sections[nextSection].classList.remove("slide-in-right");
+          sections[nextSection].classList.remove("slide-in-right-settings");
           currentSection = nextSection;
-        }, 200);
-      }, 200);
+        }, 100);
+      }, 100);
     }
   }
 }
@@ -515,6 +545,8 @@ function setShortcutOptions() {
   var height = document.getElementById("card-height");
   var width = document.getElementById("card-width");
   var resetCards = document.getElementById("reset-cards");
+  var shadow = document.getElementById("card-shadow");
+  var borderRadius = document.getElementById("card-border-radius");
   var numReg = /^\d+$/;
 
   opacity.addEventListener("change", function() {
@@ -582,6 +614,26 @@ function setShortcutOptions() {
       compareData();
     } else {
       data["card-width"] = defaultData["card-width"];
+      compareData();
+    }
+  });
+
+  shadow.addEventListener("change", function(e) {
+    if (shadow.checked) {
+      data["card-shadow"] = true;
+      compareData();
+    } else {
+      data["card-shadow"] = false;
+      compareData();
+    }
+  });
+
+  borderRadius.addEventListener("input", function() {
+    if (numReg.test(borderRadius.value)) {
+      data["card-border-radius"] =  borderRadius.value + "px";
+      compareData();
+    } else {
+      data["card-border-radius"] = defaultData["card-border-radius"];
       compareData();
     }
   });

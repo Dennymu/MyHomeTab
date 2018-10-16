@@ -21,7 +21,7 @@ body {
 
 /*** HEADER ***/
 
-.header {
+.header, .float-header {
   background-color: #fafafa;
   padding: 8px;
   position: relative;
@@ -32,7 +32,7 @@ body {
   user-select: none;
 }
 
-.header-right {
+.header-right, .float-right {
   display: inline-block;
   position: absolute;
   right: 0;
@@ -85,9 +85,8 @@ body {
 
 .float-header {
   display: none;
-  position: absolute;
-  right: 8px;
-  top: 8px;
+  background-color: transparent;
+  border-bottom: none;
 }
 
 .float-datetime {
@@ -118,7 +117,8 @@ body {
 
 .shortcut-card, .shortcut-card-test {
   background-color: #fff;
-  border-radius: 2px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
   display: block;
   height: 140px;
   transition: .15s ease-out;
@@ -140,8 +140,8 @@ body {
 }
 
 .shortcut-icon, .shortcut-icon-test {
-  margin: 10px 10px 5px 10px;
-  width: 100px;
+  padding: 10px 25px 0 25px;
+  width: 100%;
 }
 
 .shortcut-name, .shortcut-name-test {
@@ -150,7 +150,7 @@ body {
   font-size: 16px;
   left: 0;
   position: absolute;
-  width: 150px;
+  width: 100%;
 }
 
 .shortcut-manager {
@@ -272,7 +272,9 @@ body {
 }
 
 .settings-section > p {
+  border-bottom: 1px solid #ccc;
   font-size: 16px;
+  padding-bottom: 20px;
 }
 
 .settings-title {
@@ -473,9 +475,19 @@ input[type=range]::-webkit-slider-thumb {
   animation: slide-in-right 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
+.slide-in-right-settings {
+  -webkit-animation: slide-in-right 0.1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: slide-in-right 0.1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
 .slide-in-left {
 	-webkit-animation: slide-in-left 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 	animation: slide-in-left 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.slide-in-left-settings {
+	-webkit-animation: slide-in-left 0.1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	animation: slide-in-left 0.1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .fade-out {
@@ -488,9 +500,19 @@ input[type=range]::-webkit-slider-thumb {
   animation: slide-out-right 0.2s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 }
 
+.slide-out-right-settings {
+  -webkit-animation: slide-out-right 0.1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+  animation: slide-out-right 0.1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+
 .slide-out-left {
 	-webkit-animation: slide-out-left 0.2s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 	animation: slide-out-left 0.2s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+
+.slide-out-left-settings {
+	-webkit-animation: slide-out-left 0.1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+	animation: slide-out-left 0.1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 }
 
 .heartbeat {
