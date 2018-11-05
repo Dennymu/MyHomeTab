@@ -5,16 +5,18 @@ var originalSideOverlay = document.getElementsByClassName("side-container")[0].i
 var data = null;
 var defaultData = {
   "background-color": "#03a9f4",
-  "background-image": "0",
+  "background-image": "images/default_wallpaper.jpg",
   "background-option": "color",
   "card-background-color": "#ffffff",
   "card-background-opacity": "1",
+  "card-border-radius": "5px",
   "card-default-icon": "images/shortcut_icon.png",
   "card-font-color": "#333333",
-  "card-height": "140px",
+  "card-height": "90px",
   "card-opacity": "1",
   "card-reset": false,
-  "card-width": "150px",
+  "card-shadow": false,
+  "card-width": "100px",
   "cards": {
     "0": {
       "name": "Google",
@@ -95,7 +97,7 @@ var defaultData = {
   "header-background-color": "#fafafa",
   "header-font-color": "#333333",
   "header-float-font-color": "#ffffff",
-  "show-header": true,
+  "show-header": false,
   "show-clock": true,
   "time": {
     "timeFormat": "12",
@@ -108,20 +110,15 @@ var defaultData = {
   }
 };
 
-console.log("In main, calling getData");
 getData();
-console.log("Finished getData, in main");
 
 function getData() {
-  console.log("Arrived in getData");
   chrome.storage.local.get(null, function(userData) {
     if (chrome.runtime.lastError) {
       console.log(chrome.runtime.lastError);
       data = defaultData;
-      console.log("lastError active, data is " + data);
-      console.log("In getData, calling setData");
       setData();
-      console.log("Finished setData, in getData");
+
       return;
     }
     if (Object.keys(userData).length === 0) {
@@ -129,90 +126,66 @@ function getData() {
     } else {
       data = userData;
     }
-    console.log("In getData, data is " + data);
-    console.log("In getData, calling validateData");
+
     validateData();
-    console.log("Finished validateData, in getData");
-    console.log("In getData, calling hasBackground");
     hasBackground();
-    console.log("Finished hasBackground, in getData");
-    console.log("In getData, calling hasHeader");
     hasHeader();
-    console.log("Finished hasHeader, in getData");
-    console.log("In getData, calling initCards");
     initCards();
-    console.log("Finished initCards, in getData");
+    loader.style.visibility = "hidden";
   });
-  console.log("End of getData");
 }
 
 function setData() {
-  console.log("Arrived in setData");
   chrome.storage.local.set(data, function() {
     if (chrome.runtime.lastError) {
-      console.log("lastError active, error is as follows:");
       console.log(chrome.runtime.lastError);
     }
   });
-  console.log("End of setData");
 }
 
 function removeData(removedData) {
-  console.log("Arrived in removeData");
   chrome.storage.local.remove(removedData, function() {
     if (chrome.runtime.lastError) {
-      console.log("lastError active, error is as follows:");
       console.log(chrome.runtime.lastError);
     }
   });
-  console.log("End of removeData");
 }
 
 function validateData() {
-  console.log("Arrived in validateData");
   if (data["card-opacity"] === undefined) {
     data["card-opacity"] = "1";
-    console.log("card-opacity was undefined, value is now " + data["card-opacity"]);
   }
 
   if (data["card-background-opacity"] === undefined) {
     data["card-background-opacity"] = "1";
-    console.log("card-background-opacity was undefined, value is now " + data["card-background-opacity"]);
   }
 
   if (data["card-background-color"] === undefined) {
     data["card-background-color"] = "#ffffff";
-    console.log("card-background-color was undefined, value is now " + data["card-background-color"]);
   }
 
   if (data["card-font-color"] === undefined) {
-    console.log("card-font-color was undefined, value is now " + data["card-font-color"]);
     data["card-font-color"] = "#333333";
   }
 
   if (data["card-default-icon"] === undefined) {
     data["card-default-icon"] = "images/shortcut_icon.png";
-    console.log("card-default-icon was undefined, value is now " + data["card-default-icon"]);
   }
 
   if (data["header-background-color"] === undefined) {
     data["header-background-color"] = "#fafafa";
-    console.log("header-background-color was undefined, value is now " + data["header-background-color"]);
   }
 
   if (data["header-font-color"] === undefined) {
     data["header-font-color"] = "#000000";
-    console.log("header-font-color was undefined, value is now " + data["header-font-color"]);
   }
 
   if (data["card-height"] === undefined) {
-    data["card-height"] = "140px";
-    console.log("card-height was undefined, value is now " + data["card-height"]);
+    data["card-height"] = "90px";
   }
 
   if (data["card-width"] === undefined) {
-    data["card-width"] = "150px";
-    console.log("card-width was undefined, value is now " + data["card-width"]);
+    data["card-width"] = "100px";
   }
 
   if (data["header-float-font-color"] === undefined) {
@@ -223,35 +196,34 @@ function validateData() {
     data["card-reset"] = false;
   }
 
-  console.log("In validateData, calling setData");
+  if (data["card-border-radius"] === undefined) {
+    data["card-border-radius"] = "5px";
+  }
+
+  if (data["card-shadow"] === undefined) {
+    data["card-shadow"] = false;
+  }
+
   setData();
-  console.log("Finished setData, in validateData");
-  console.log("End of validateData");
 }
 
 function hasBackground() {
-  console.log("Arrived in hasBackground");
   var body = document.getElementsByTagName("body")[0];
   var bodyImage = document.getElementsByClassName("body-image")[0];
 
   if (data["background-option"] === "color") {
-    console.log("data[\"background-option\"] is set to color:" + data["background-color"]);
     body.style.backgroundColor = data["background-color"];
-    console.log("color is " + body.style.backgroundColor);
   } else {
-    console.log("data[\"background-option\"] is not set to color, presumably image?");
     bodyImage.src = data["background-image"];
     bodyImage.style.display = "block";
   }
-  console.log("End of hasBackground");
 }
 
 function hasHeader() {
-  console.log("Arrived in hasHeader");
   var header = document.getElementsByClassName("header")[0];
   var floatSettings = document.getElementsByClassName("float-header")[0];
+
   if (data["show-header"]) {
-    console.log("data[\"show-header\"] is active");
     var dateHeader = document.getElementsByClassName("header-date")[0];
     var timeHeader = document.getElementsByClassName("header-time")[0];
     var headerInfo = document.getElementsByClassName("header-info")[0];
@@ -265,11 +237,8 @@ function hasHeader() {
     headerAdd.style.color = data["header-font-color"];
     loader.style.top = "40px";
     headerInfo.addEventListener("click", initLightBox);
-    console.log("In hasHeader with show-header active, calling hasClock");
     hasClock(dateHeader, timeHeader);
-    console.log("Finished hasClock, in hasHeader with show-header active");
   } else {
-    console.log("data[\"show-header\" is NOT active]");
     var dateHeader = document.getElementsByClassName("header-float-date")[0];
     var timeHeader = document.getElementsByClassName("header-float-time")[0];
     var floatInfo = document.getElementsByClassName("float-info")[0];
@@ -282,38 +251,26 @@ function hasHeader() {
     floatInfo.style.color = data["header-float-font-color"];
     loader.style.top = "0px";
     floatInfo.addEventListener("click", initLightBox);
-    console.log("In hasHeader with show-header NOT active, calling hasClock");
     hasClock(dateHeader, timeHeader);
-    console.log("Finished hasClock, in hasHader with show-header NOT active");
   }
-  console.log("End of hasHeader");
 }
 
 function hasClock(dateHeader, timeHeader) {
-  console.log("Arrived in hasClock");
   if (data["show-clock"]) {
-    console.log("data[\"showClock\"] is active");
-    console.log("In hasClock with show-clock active, calling initClock");
     initClock(dateHeader, timeHeader);
-    console.log("Finished initClock, in hasClock with show-clock active");
   } else {
-    console.log("data[\"show-clock\"] is NOT active");
     dateHeader.style.display = "none";
     timeHeader.style.display = "none";
   }
-  console.log("End of hasClock");
 }
 
 function initCards() {
-  console.log("Arrived in initCards");
   var cardGrid = document.getElementsByClassName("shortcut-grid")[0];
   var cardKeys = Object.keys(data["cards"]);
   var html = "";
-  console.log("In initCards, calling initAddCard");
-  initAddCard();
-  console.log("Finished initAddCard, in initCards");
 
-  loader.style.visibility = "visible";
+  initAddCard();
+
   for (var i = 0; i < cardKeys.length; i++) {
     html = "";
     html += "<li>";
@@ -329,52 +286,37 @@ function initCards() {
     html += "</a>";
     html += "</li>";
     cardGrid.innerHTML += html;
-    console.log("In initCards, added the following HTML to cardGrid: " + html);
   }
-  loader.style.visibility = "hidden";
 
-  console.log("In initCards, creating Sortable for cardGrid");
   Sortable.create(cardGrid, {
     animation: 150,
     onUpdate: function(evt) {
-      console.log("In initCards, Sortable on cardGrid has been activated, calling updateData");
       updateData();
-      console.log("Finished updateData, in initCards");
     }
   });
 
-  console.log("In initCards, calling initCardOptions");
   initCardOptions();
-  console.log("Finished initCardOptions, in initCards");
-  console.log("In initCards, calling initCardManager");
   initCardManager();
-  console.log("Finished initCardManager, in initCards");
-  console.log("End of initCards");
 }
 
 function initAddCard() {
-  console.log("Arrived in initAddCard");
   var headerAdd = document.getElementsByClassName("header-add")[0];
   var floatAdd = document.getElementsByClassName("float-add")[0];
+
   headerAdd.addEventListener("click", function headerAddListener() {
-    console.log("In initAddCard, headerAdd click event activated, calling showSideContainer");
     showSideContainer("add");
-    console.log("Finished showSideContainer, in initAddCard with headerAdd click event active");
     headerAdd.removeEventListener("click", headerAddListener);
     headerAdd.addEventListener("click", headerAddListener);
   });
+
   floatAdd.addEventListener("click", function floatAddListener() {
-    console.log("In initAddCard, floatAdd click event activated, calling showSideContainer");
     showSideContainer("add");
-    console.log("Finished showSideContainer, in initAddCard with floatAdd click event active");
     floatAdd.removeEventListener("click", floatAddListener);
     floatAdd.addEventListener("click", floatAddListener);
   });
-  console.log("End of initAddCard");
 }
 
 function addCard(imageData, title, url) {
-  console.log("Arrived in <.< >.> addCard");
   var cardIndex = (Object.keys(data["cards"]).length).toString();
   var cardGrid = document.getElementsByClassName("shortcut-grid")[0];
   var html = "";
@@ -391,108 +333,74 @@ function addCard(imageData, title, url) {
   html += "</a>";
   html += "</li>";
   cardGrid.innerHTML += html;
-  console.log("Adding the following HTML to cardGrid: " + html);
   html = "";
   data["cards"][cardIndex] = {
     "name": title,
     "url": url,
     "icon": imageData
   };
-  console.log("In addCard, calling setData");
+
   setData();
-  console.log("Finished setData, in addCard");
-  console.log("In addCard, calling initCardOptions");
   initCardOptions();
-  console.log("Finished initCardOptions, in addCard");
-  console.log("In addCard, calling initCardManager");
   initCardManager();
-  console.log("Finished initCardManager, in addCard");
-  console.log("End of addCard");
 }
 
 function initCardManager() {
-  console.log("Arrived in initCardManager");
   var manager = document.getElementsByClassName("shortcut-manager");
 
   for (var i = 0; i < manager.length; i++) {
     manager[i].addEventListener("click", function(e) {
-      console.log("In initCardManager, manager " + i + " has been clicked, preventing default action");
       e.preventDefault();
     });
   }
 
-  console.log("In initCardManager, calling initEditCard");
   initEditCard();
-  console.log("Finished initEditCard, in initCardManager");
-  console.log("In initCardManager, calling initRemoveCard");
   initRemoveCard();
-  console.log("Finished initRemoveCard, in initCardManager");
-  console.log("End of initCardManager");
 }
 
 function initEditCard() {
-  console.log("Arrived in initEditCard");
   var edit = document.getElementsByClassName("shortcut-edit");
 
   for (var i = 0; i < edit.length; i++) {
     edit[i].addEventListener("click", function(e) {
-      console.log("Edit button has been clicked");
       var grid = document.getElementsByClassName("shortcut-grid")[0];
       var element = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
       var index = 0;
 
       for (var j = 0; j < grid.childNodes.length; j++) {
         if (grid.childNodes[j] === element) {
-          console.log("Element has been found, it's card no. " + j);
           index = j;
-          console.log("Breaking out of FOR loop");
           break;
         }
-        console.log("Still in FOR loop");
       }
-      console.log("Out of FOR loop");
-
-      console.log("In initEditCard, edit button has been clicked, calling showSideContainer");
       showSideContainer("edit", index);
-      console.log("Finished showSideContainer, in initEditCard, edit button has been clicked");
     });
   }
-  console.log("End of initEditCard");
 }
 
 function initRemoveCard() {
-  console.log("Arrived in initRemoveCard");
   var remove = document.getElementsByClassName("shortcut-delete");
   for (var i = 0; i < remove.length; i++) {
     remove[i].addEventListener("click", function(e) {
-      console.log("Remove button has been clicked, removing element " + e.currentTarget);
-      console.log("In initRemoveCard, remove button active, calling removeCard");
       removeCard(e.currentTarget);
-      console.log("Finished removeCard, in initRemoveCard with remove button active");
     });
   }
-  console.log("End of initRemoveCard");
 }
 
 function removeCard(element) {
-  console.log("Arrived in removeCard");
   if (confirm("Are you sure you want to delete the " + element.parentElement.parentElement.childNodes[1].innerHTML + " shortcut?")) {
-    console.log("In removeCard, confirm dialogue activated, deleting element");
     element.parentElement.parentElement.parentElement.parentElement.remove();
-    console.log("In removeCard, confirm dialogue activated, element deleted, calling updateData");
     updateData("remove");
-    console.log("Finished updateData, in removeCard, confirm dialogue activated");
   }
-  console.log("End of removeCard");
 }
 
 function initCardOptions() {
-  console.log("Arrived in initCardOptions");
   var cards = document.getElementsByClassName("shortcut-card");
   var cardNames = document.getElementsByClassName("shortcut-name");
-  console.log("In initCardOptions, calling cardBackground");
+  var images = document.getElementsByClassName("shortcut-icon");
   var background = cardBackground();
-  console.log("Finished cardBackground, in initCardOptions");
+
+
   cardOpacity();
 
   for (var i = 0; i < cards.length; i++) {
@@ -502,8 +410,16 @@ function initCardOptions() {
     cards[i].style.display = "block";
     cards[i].style.height = data["card-height"];
     cards[i].style.width = data["card-width"];
-    cards[i].childNodes[1].style.width = data["card-width"];
+    cards[i].style.borderRadius = data["card-border-radius"];
     cards[i].classList.add("fade-in-card");
+
+    if (!data["card-shadow"]) {
+      cards[i].parentNode.style.boxShadow = "none";
+    }
+
+    if (parseInt(data["card-width"].substring(0, 3)) < 150) {
+      cards[i].childNodes[1].style.fontSize = "12px";
+    }
   }
 
   function cardOpacity() {
@@ -517,14 +433,10 @@ function initCardOptions() {
   }
 
   function cardBackground() {
-    console.log("Arrived in cardBackground in initCardOptions");
     backgroundOpacity = data["card-background-opacity"];
     backgroundColor = data["card-background-color"];
-    console.log("In cardBackground in initCardOptions, calling hexToRgb");
     rgb = hexToRgb(backgroundColor);
-    console.log("Finished hexToRgb, in cardBackground in initCardOptions");
     cssColor = "rgba(" + rgb.r + ", " + rgb.g + ", " + rgb.b + ", " + backgroundOpacity + ")";
-    console.log("End of cardBackground in initCardOptions, returning cssColor: " + cssColor);
     return cssColor;
   }
 
@@ -533,20 +445,16 @@ function initCardOptions() {
       cards[i].classList.remove("fade-in-card");
     }
   }, 300);
-  console.log("End of initCardOptions");
 }
 
 function updateData(action) {
-  console.log("Arrived in updateData");
   var cardGrid = document.getElementsByClassName("shortcut-grid")[0];
   var cardKeys = Object.keys(data["cards"]);
   var cardList = cardGrid.children;
 
   if (action === "remove") {
-    console.log("Action was to remove, cardKeys.length is " + cardKeys.length);
     delete data["cards"][cardKeys.length.toString() - 1];
     cardKeys = Object.keys(data["cards"]);
-    console.log("cardKeys.length is now " + cardKeys.length);
   }
 
   for (var i = 0; i < cardList.length; i++) {
@@ -554,10 +462,8 @@ function updateData(action) {
     data["cards"][cardKeys[i]]["icon"] = cardList[i].childNodes[0].childNodes[0].childNodes[0].src;
     data["cards"][cardKeys[i]]["name"] = cardList[i].childNodes[0].childNodes[0].childNodes[1].innerHTML;
   }
-  console.log("In updateData, calling setData");
+
   setData();
-  console.log("Finished setData, in updateData");
-  console.log("End of updateData");
 }
 
 function initClock(dateHeader, timeHeader) {
@@ -733,9 +639,8 @@ function initClock(dateHeader, timeHeader) {
 }
 
 function hexToRgb(hex) {
-  console.log("Arrived in hexToRgb");
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  console.log("End of hexToRgb");
+
   return result ? {
     r: parseInt(result[1], 16),
     g: parseInt(result[2], 16),
@@ -744,7 +649,6 @@ function hexToRgb(hex) {
 }
 
 function initLightBox() {
-  console.log("Arrived in initLightBox");
   var lightBox = document.getElementById("lightbox");
   var overlay = document.getElementById("lightbox-overlay");
   var close = document.getElementById("lightbox-close");
@@ -762,22 +666,19 @@ function initLightBox() {
   }, 200);
 
   function hideLightBox() {
-    console.log("Arrived in hideLightBox in initLightBox");
     lightBox.classList.add("slide-out-fwd-top");
     overlay.classList.add("fade-out");
+
     setTimeout(function() {
       lightBox.classList.remove("slide-out-fwd-top");
       overlay.classList.remove("fade-out");
       lightBox.style.display = "none";
       overlay.style.display = "none";
     }, 200);
-    console.log("End of hideLightBox in initLightBox");
   }
-  console.log("End of initLightBox");
 }
 
 function initSideContainer(type, index) {
-  console.log("Arrived in initSideContainer");
   var closeBtn = document.getElementById("close-btn");
   var saveBtn = document.getElementById("save-btn");
   var inputFile = document.getElementById("shortcut-file");
@@ -792,77 +693,47 @@ function initSideContainer(type, index) {
   var url = "";
 
   sideOverlay.addEventListener("click", function sideOverlayListener() {
-    console.log("In initSideContainer, sideOverlay clicked, calling emptyFields");
     emptyFields();
-    console.log("Finished emptyFields, in initSideContainer, sideOverlay clicked");
-    console.log("In initSideContainer, sideOverlay clicked, calling hideSideContainer");
     hideSideContainer();
-    console.log("Finished hideSideContainer, in initSideContainer, sideOverlay clicked");
   });
 
   closeBtn.addEventListener("click", function closeBtnListener() {
-    console.log("In initSideContainer, closeBtn clicked, calling emptyFields");
     emptyFields();
-    console.log("Finished emptyFields, in initSideContainer, closeBtn clicked");
-    console.log("In initSideContainer, closeBtn clicked, calling hideSideContainer");
     hideSideContainer();
-    console.log("finished hideSideContainer, in initSideContainer, closeBtn clicked");
   });
 
   if (type === "edit") {
-    console.log("In initSideContainer, type is edit, calling fillFields");
     fillFields(index);
-    console.log("Finished fillFields, in initSideContainer, type is edit");
   }
 
   saveBtn.addEventListener("click", function saveBtnListener() {
-    console.log("In initSideContainer, saveBtn clicked");
     var result = false;
 
     if (type === "add") {
-      console.log("In initSideContainer, saveBtn clicked, type is add, calling newCard");
       result = newCard();
-      console.log("Finished newCard, in initSideContainer, saveBtn clicked, type is add");
     }
 
     if (type === "edit") {
-      console.log("In initSideContainer, saveBtn clicked, type is edit, calling editCard");
       result = editCard(index);
-      console.log("Finished editCard, in initSideContainer, saveBtn clicked, type is edit");
     }
 
     if (result) {
-      console.log("In initSideContainer, saveBtn clicked, result good, calling emptyFields");
       emptyFields();
-      console.log("Finished emptyFields, in initSideContainer, saveBtn clicked, result good");
-      console.log("In initSideContainer, saveBtn clicked, result good, calling hideSideContainer");
       hideSideContainer();
-      console.log("Finished hideSideContainer, in initSideContainer, saveBtn clicked, result good");
     }
   });
 
   function newCard() {
-    console.log("Arrived in newCard in initSideContainer");
-    console.log("In newCard in initSideContainer, calling validateFields");
     if (!validateFields()) {
-      console.log("In newCard in initSideContainer, validateFields FAILED, returning FALSE");
-      console.log("End of newCard in initSideContainer");
       return false;
     }
 
-    console.log("In newCard in initSideContainer, validateFields good, calling addCard");
     addCard(imageData, title, url);
-    console.log("Finished addCard, in newCard in initSideContainer, validateFields good, returning TRUE");
-    console.log("End of newCard in initSideContainer");
     return true;
   }
 
   function editCard(index) {
-    console.log("Arrived in editCard in initSideContainer");
-    console.log("In editCard in initSideContainer, calling validateFields");
     if (!validateFields()) {
-      console.log("In editCard in initSideContainer, validateFields FAILED, returning FALSE");
-      console.log("End of editCard in initSideContainer");
       return false;
     }
 
@@ -870,47 +741,31 @@ function initSideContainer(type, index) {
     data["cards"][index - 1]["name"] = title;
     data["cards"][index - 1]["icon"] = imageData;
 
-    console.log("In editCard in initSideContainer, validateFields good, calling setData");
     setData();
-    console.log("Finished setData, in editCard in initSideContainer, validateFields good");
-    console.log("In editCard in initSideContainer, validateFields good, calling refreshCard");
     refreshCard(index);
-    console.log("Finished refreshCard, in editCard in initSideContainer, validateFields good, returning TRUE");
-    console.log("End of editCard in initSideContainer");
-
     return true;
   }
 
   function validateFields() {
-    console.log("Arrived in validateFields in initSideContainer");
+
     if (url === "") {
-      console.log("URL empty");
       inputError.innerHTML = "Card requires a url :)";
-      console.log("In validateFields in initSideContainer, URL empty, calling showError");
       showError();
-      console.log("Finished showError, in validateFields in initSideContainer, URL empty, returning FALSE");
-      console.log("End of validateFields in initSideContainer");
       return false;
     }
 
     if (url.indexOf("https://") === -1) {
-      console.log("URL did not have https://");
       url = "https://" + url;
-      console.log("URL now " + url);
     }
 
     if (imageData === "") {
-      console.log("imageData empty, taking default");
       imageData = data["card-default-icon"];
     }
 
-    console.log("In validateFields in initSideContainer, returning TRUE");
-    console.log("End of validateFields in initSideContainer");
     return true;
   }
 
   function fillFields(index) {
-    console.log("Arrived in fillFields in initSideContainer");
     url = data["cards"][index - 1]["url"];
     title = data["cards"][index - 1]["name"];
     imageData = data["cards"][index - 1]["icon"];
@@ -922,11 +777,10 @@ function initSideContainer(type, index) {
     inputURL.parentElement.childNodes[3].classList.add("active");
     previewTitle.innerHTML = title;
     previewImage.src = imageData;
-    console.log("End of fillFields in initSideContainer");
+
   }
 
   function emptyFields() {
-    console.log("Arrived in emptyFields in initSideContainer");
     previewImage.src = data["card-default-icon"];
     inputTitle.value = "";
     inputTitle.text = "";
@@ -942,23 +796,18 @@ function initSideContainer(type, index) {
     title = "";
     imageData = "";
     url = "";
-    console.log("End of emptyFields in initSideContainer");
   }
 
   function showError() {
-    console.log("Arrived in showError in initSideContainer");
     inputError.style.visibility = "visible";
     inputError.classList.add("heartbeat");
     setTimeout(function() {
       inputError.classList.remove("heartbeat");
     }, 1500);
-    console.log("End of showError in initSideContainer");
   }
 
   previewImage.addEventListener("click", function previewImageListener() {
-    console.log("In initSideContainer, previewImage clicked");
     inputFile.click();
-    console.log("End of previewImage clicked, in initSideContainer");
   });
 
   inputFile.addEventListener("change", function inputFileListener() {
@@ -976,64 +825,46 @@ function initSideContainer(type, index) {
   });
 
   inputTitle.addEventListener("change", function inputTitleListener() {
-    console.log("In initSideContainer, inputTitle changed");
     previewTitle.innerHTML = inputTitle.value;
     title = inputTitle.value;
-    console.log("Title now " + title);
-    console.log("End of inputTitle changed, in initSideContainer");
   });
 
   inputURL.addEventListener("change", function inputURLListener() {
-    console.log("In initSideContainer, inputURL changed");
     url = inputURL.value;
-    console.log("Url now " + url);
-    console.log("End of inputURL changed, in initSideContainer");
   });
 
   document.addEventListener("keyup", function documentListener(e) {
-    console.log("In initSideContainer, keyup");
     if (sideContainer.style.display === "block") {
-      console.log("Sidecontainer style block");
       if (e.key === "Enter") {
-        console.log("Keypress was Enter, calling saveBtn.click");
         saveBtn.click();
-        console.log("Finished saveBtn.click, in initSideContainer keyup, Enter pressed");
       }
 
       if (e.key === "Escape") {
-        console.log("Keypress was Escape");
-        console.log("In initSideContainer, calling hideSideContainer");
         hideSideContainer();
-        console.log("Finished hideSideContainer, in initSideContainer, keypress was Escape");
-        console.log("In initSideContainer, calling emptyFields");
         emptyFields();
-        console.log("Finished emptyFields, in initSideContainer, keypress was Escape");
       }
     }
   });
-  console.log("End of initSideContainer");
 }
 
 function showSideContainer(type, index) {
-  console.log("Arrived in showSideContainer");
   sideContainer.style.display = "block";
   sideOverlay.style.display = "block";
   sideContainer.classList.add("slide-in-right");
   sideOverlay.classList.add("fade-in");
-  console.log("In showSideContainer, calling initSideContainer");
+
   initSideContainer(type, index);
-  console.log("Finished initSideContainer, in showSideContainer");
+
   setTimeout(function() {
     sideContainer.classList.remove("slide-in-right");
     sideOverlay.classList.remove("fade-in");
   }, 200);
-  console.log("End of showSideContainer");
 }
 
 function hideSideContainer() {
-  console.log("Arrived in hideSideContainer");
   sideContainer.classList.add("slide-out-right");
   sideOverlay.classList.add("fade-out");
+
   setTimeout(function() {
     sideContainer.classList.remove("slide-out-right");
     sideOverlay.classList.remove("fade-out");
@@ -1041,7 +872,6 @@ function hideSideContainer() {
     sideOverlay.style.display = "none";
   }, 200);
   resetSideContainer();
-  console.log("End of hideSideContainer");
 }
 
 function resetSideContainer() {
@@ -1049,12 +879,10 @@ function resetSideContainer() {
 }
 
 function refreshCard(index) {
-  console.log("Arrived in refreshCard");
   var cardList = document.getElementsByClassName("shortcut-grid")[0];
   var card = cardList.childNodes[index];
 
   card.childNodes[0].href = data["cards"][index - 1]["url"];
   card.childNodes[0].childNodes[0].childNodes[0].src = data["cards"][index - 1]["icon"];
   card.childNodes[0].childNodes[0].childNodes[1].innerHTML = data["cards"][index - 1]["name"];
-  console.log("End of refreshCard");
 }
