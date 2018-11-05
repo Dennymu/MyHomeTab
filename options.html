@@ -26,7 +26,7 @@
       <span>Header</span>
       <span>Shortcuts</span>
       <span>Data</span>
-      <span><a href="https://www.paypal.me/dennymu">Donate</a></span>
+      <span><a href="https://www.paypal.me/dennymu" target="_blank" rel="noopener">Donate</a></span>
     </div>
   </div>
 
@@ -68,62 +68,66 @@
     <p>Options for all things header.</p>
     <div class="settings-form">
       <br><br>
-      <div class="input-field col s6">
-        <input placeholder="" id="header-background-color" type="text" class="validate">
-        <label for="background-color">Header Background Color - Hex Code</label>
+      <div class="settings-left">
+        <label>
+          <input id="show-header" type="checkbox" class="filled-in" />
+          <span>Show Header</span>
+        </label>
+        <br>
+        <label>
+          <input id="show-clock" type="checkbox" class="filled-in" />
+          <span>Show Clock</span>
+        </label>
+        <br>
+        <label>
+          <input id="time-format" type="checkbox" class="filled-in" />
+          <span>12 Hour Clock</span>
+        </label>
+        <br>
+        <label>
+          <input id="show-weekday" type="checkbox" class="filled-in" />
+          <span>Show Weekday</span>
+        </label>
+        <br>
+        <label>
+          <input id="show-month" type="checkbox" class="filled-in" />
+          <span>Show Month</span>
+        </label>
+        <br>
+        <label>
+          <input id="show-day" type="checkbox" class="filled-in" />
+          <span>Show Day</span>
+        </label>
+        <br>
+        <label>
+          <input id="show-year" type="checkbox" class="filled-in" />
+          <span>Show Year</span>
+        </label>
+        <br>
+        <label>
+          <input id="show-time" type="checkbox" class="filled-in" />
+          <span>Show Time</span>
+        </label>
+        <br>
+        <label>
+          <input id="show-timeofday" type="checkbox" class="filled-in" />
+          <span>Show Time of Day</span>
+        </label>
       </div>
-      <div class="input-field col s6">
-        <input placeholder="" id="header-font-color" type="text" class="validate">
-        <label for="header-font-color">Header Font Color - Hex Code</label>
+      <div class="settings-right">
+        <div class="input-field col s6">
+          <input placeholder="" id="header-background-color" type="text" class="validate">
+          <label for="background-color">Header Background Color - Hex Code</label>
+        </div>
+        <div class="input-field col s6">
+          <input placeholder="" id="header-font-color" type="text" class="validate">
+          <label for="header-font-color">Header Font Color - Hex Code</label>
+        </div>
+        <div class="input-field col s6">
+          <input placeholder="" id="header-float-font-color" type="text" class="validate">
+          <label for="header-float-font-color">Floating Header Font Color - Hex Code</label>
+        </div>
       </div>
-      <div class="input-field col s6">
-        <input placeholder="" id="header-float-font-color" type="text" class="validate">
-        <label for="header-float-font-color">Floating Header Font Color - Hex Code</label>
-      </div>
-      <label>
-        <input id="show-header" type="checkbox" class="filled-in" />
-        <span>Show Header</span>
-      </label>
-      <br>
-      <label>
-        <input id="show-clock" type="checkbox" class="filled-in" />
-        <span>Show Clock</span>
-      </label>
-      <br>
-      <label>
-        <input id="time-format" type="checkbox" class="filled-in" />
-        <span>12 Hour Clock</span>
-      </label>
-      <br>
-      <label>
-        <input id="show-weekday" type="checkbox" class="filled-in" />
-        <span>Show Weekday</span>
-      </label>
-      <br>
-      <label>
-        <input id="show-month" type="checkbox" class="filled-in" />
-        <span>Show Month</span>
-      </label>
-      <br>
-      <label>
-        <input id="show-day" type="checkbox" class="filled-in" />
-        <span>Show Day</span>
-      </label>
-      <br>
-      <label>
-        <input id="show-year" type="checkbox" class="filled-in" />
-        <span>Show Year</span>
-      </label>
-      <br>
-      <label>
-        <input id="show-time" type="checkbox" class="filled-in" />
-        <span>Show Time</span>
-      </label>
-      <br>
-      <label>
-        <input id="show-timeofday" type="checkbox" class="filled-in" />
-        <span>Show Time of Day</span>
-      </label>
     </div>
   </div>
 
@@ -132,53 +136,55 @@
     <p>Get your shortcut card options here!</p>
     <div class="settings-form">
       <br><br>
-      <label>
-        <input id="card-shadow" type="checkbox" class="filled-in" />
-        <span style="color:#333">Card Shadow</span>
-      </label>
-      <br><br>
-      Card Opacity
-      <p class="range-field">
-        <input type="range" id="card-opacity" min="0" max="100" />
-      </p>
-      Card Background Opacity
-      <p class="range-field">
-        <input type="range" id="card-background-opacity" min="0" max="100" />
-      </p>
-      <div class="input-field col s6">
-        <input placeholder="" id="card-background-color" type="text" class="validate">
-        <label for="card-background-color">Card Background Color - Hex Code</label>
-      </div>
-      <div class="input-field col s6">
-        <input placeholder="" id="card-font-color" type="text" class="validate">
-        <label for="card-font-color">Card Font Color - Hex Code</label>
-      </div>
-      <div class="input-field col s6">
-        <input placeholder="" id="card-height" type="text" class="validate">
-        <label for="card-height">Card Height - Pixels</label>
-      </div>
-      <div class="input-field col s6">
-        <input placeholder="" id="card-width" type="text" class="validate">
-        <label for="card-width">Card Width - Pixels</label>
-      </div>
-      <div class="input-field col s6">
-        <input placeholder="" id="card-border-radius" type="text" class="validate">
-        <label for="card-border-radius">Card Border Radius - Pixels</label>
-      </div>
-      <p class="settings-description" style="margin-top: 30px;">Change the default image when creating new shortcuts</p>
-      <div class="file-field input-field">
-        <div class="btn waves-effect waves-light">
-          <span>Icon</span>
-          <input id="card-icon" type="file">
+      <div class="settings-left">
+        <label>
+          <input id="card-shadow" type="checkbox" class="filled-in" />
+          <span style="color:#333">Card Shadow</span>
+        </label>
+        <div class="input-field col s6">
+          <input placeholder="" id="card-background-color" type="text" class="validate">
+          <label for="card-background-color">Card Background Color - Hex Code</label>
         </div>
-        <div class="file-path-wrapper">
-          <input id="card-icon-text" class="file-path validate" type="text">
+        <div class="input-field col s6">
+          <input placeholder="" id="card-font-color" type="text" class="validate">
+          <label for="card-font-color">Card Font Color - Hex Code</label>
+        </div>
+        <div class="input-field col s6">
+          <input placeholder="" id="card-height" type="text" class="validate">
+          <label for="card-height">Card Height - Pixels</label>
+        </div>
+        <div class="input-field col s6">
+          <input placeholder="" id="card-width" type="text" class="validate">
+          <label for="card-width">Card Width - Pixels</label>
+        </div>
+        <div class="input-field col s6">
+          <input placeholder="" id="card-border-radius" type="text" class="validate">
+          <label for="card-border-radius">Card Border Radius - Pixels</label>
         </div>
       </div>
-      <div id="reset-icon" class="btn btn-full btn-margin-right waves-effect waves-light">Reset to Original Icon</div>
-      <br><br>
-      <div id="reset-cards" class="btn btn-full btn-margin-right waves-effect waves-light">Reset Card Settings to Default</div>
-      <br><br>
+      <div class="settings-right">
+        Card Opacity
+        <p class="range-field">
+          <input type="range" id="card-opacity" min="0" max="100" />
+        </p>
+        Card Background Opacity
+        <p class="range-field">
+          <input type="range" id="card-background-opacity" min="0" max="100" />
+        </p>
+        <p class="settings-description" style="margin-top: 30px;">Change the default image when creating new shortcuts</p>
+        <div class="file-field input-field">
+          <div class="btn waves-effect waves-light">
+            <span>Icon</span>
+            <input id="card-icon" type="file">
+          </div>
+          <div class="file-path-wrapper">
+            <input id="card-icon-text" class="file-path validate" type="text">
+          </div>
+        </div>
+        <div id="reset-icon" class="btn btn-full btn-margin-right waves-effect waves-light">Reset to Original Icon</div>
+        <br><br>
+        <div id="reset-cards" class="btn btn-full btn-margin-right waves-effect waves-light">Reset Card Settings to Default</div>
+      </div>
     </div>
   </div>
 

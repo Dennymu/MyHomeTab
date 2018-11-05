@@ -289,14 +289,28 @@ body {
 
 .settings-description {
   font-size: 14px;
-  margin-left: 10%;
-  margin-right: 10%;
 }
 
 .settings-form {
   font-size: 14px;
   margin-left: 20%;
   margin-right: 20%;
+}
+
+.settings-left, .settings-right {
+  display: inline-block;
+  width: 100%;
+  vertical-align: top;
+}
+
+@media screen and (min-width: 1000px) {
+  .settings-left, .settings-right {
+    width: 40%;
+  }
+
+  .settings-left {
+    margin-right: 18%;
+  }
 }
 
 /*** RESOURCES ***/
@@ -378,6 +392,7 @@ input[type=range]::-webkit-slider-thumb {
 
 .btn {
   background-color: #1B8ADB;
+  border-radius: 24px;
 }
 
 .btn:hover {
