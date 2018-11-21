@@ -34,6 +34,15 @@
     <h1>Background Settings</h1>
     <p>You can use a color or an image as a background. To start, choose whether you'd like an image or color. Then input the hex color code or choose an image from a local file.</p>
     <div class="settings-form">
+      <div class="settings-background-preview">
+        <div>
+          <div></div>
+          <div></div>
+        </div>
+        <div>
+          <img src="" />
+        </div>
+      </div>
       <br><br>
       <div class="center-align">
         <label style="margin-right: 10px;">
@@ -67,6 +76,17 @@
     <h1>Header Settings</h1>
     <p>Options for all things header.</p>
     <div class="settings-form">
+      Preview
+      <div class="settings-header-preview">
+        <span class="header-weather"></span>
+        <div class="header-right">
+          <span class="header-date">Wednesday, March 3, 2018</span>
+          <span class="header-time">12:00:00</span>
+          <div class="header-add waves-effect waves-blue"><i class="fas fa-edit"></i></div>
+          <div class="header-info waves-effect waves-blue"><i class="fas fa-question"></i></div>
+          <div class="header-settings waves-effect waves-blue"><i class="fas fa-cog"></i></div>
+        </div>
+      </div>
       <br><br>
       <div class="settings-left">
         <label>
@@ -135,12 +155,18 @@
     <h1>Shortcut Settings</h1>
     <p>Get your shortcut card options here!</p>
     <div class="settings-form">
+      Preview
+      <div class="shortcut-card-test waves-effect waves-blue">
+        <img class="shortcut-icon-test" alt="Preview shortcut icon" src="images/shortcut_icon.png" draggable="false" />
+        <span class="shortcut-name-test">Title</span>
+      </div>
       <br><br>
       <div class="settings-left">
         <label>
           <input id="card-shadow" type="checkbox" class="filled-in" />
           <span style="color:#333">Card Shadow</span>
         </label>
+        <br><br>
         <div class="input-field col s6">
           <input placeholder="" id="card-background-color" type="text" class="validate">
           <label for="card-background-color">Card Background Color - Hex Code</label>
@@ -183,7 +209,7 @@
         </div>
         <div id="reset-icon" class="btn btn-full btn-margin-right waves-effect waves-light">Reset to Original Icon</div>
         <br><br>
-        <div id="reset-cards" class="btn btn-full btn-margin-right waves-effect waves-light">Reset Card Settings to Default</div>
+        <div id="reset-cards" class="btn btn-full btn-margin-right waves-effect waves-light">Reset to Default</div>
       </div>
     </div>
   </div>

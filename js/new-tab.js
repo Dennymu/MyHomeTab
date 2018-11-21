@@ -6,7 +6,7 @@ var data = null;
 var defaultData = {
   "background-color": "#03a9f4",
   "background-image": "images/default_wallpaper.jpg",
-  "background-option": "color",
+  "background-option": "image",
   "card-background-color": "#ffffff",
   "card-background-opacity": "1",
   "card-border-radius": "5px",
@@ -400,7 +400,6 @@ function initCardOptions() {
   var images = document.getElementsByClassName("shortcut-icon");
   var background = cardBackground();
 
-
   cardOpacity();
 
   for (var i = 0; i < cards.length; i++) {
@@ -411,6 +410,7 @@ function initCardOptions() {
     cards[i].style.height = data["card-height"];
     cards[i].style.width = data["card-width"];
     cards[i].style.borderRadius = data["card-border-radius"];
+    cards[i].parentNode.style.borderRadius = data["card-border-radius"];
     cards[i].classList.add("fade-in-card");
 
     if (!data["card-shadow"]) {
@@ -432,19 +432,44 @@ function initCardOptions() {
     head.appendChild(style);
   }
 
-  function cardBackground() {
-    backgroundOpacity = data["card-background-opacity"];
-    backgroundColor = data["card-background-color"];
-    rgb = hexToRgb(backgroundColor);
-    cssColor = "rgba(" + rgb.r + ", " + rgb.g + ", " + rgb.b + ", " + backgroundOpacity + ")";
-    return cssColor;
-  }
-
   setTimeout(function() {
     for (var i = 0; i < cards.length; i++) {
       cards[i].classList.remove("fade-in-card");
     }
   }, 300);
+
+  updateTestCard();
+}
+
+function updateTestCard() {
+  var testCard = document.getElementsByClassName("shortcut-card-test")[0];
+  var testCardName = document.getElementsByClassName("shortcut-name-test")[0];
+  var testImage = document.getElementsByClassName("shortcut-icon-test")[0];
+  var background = cardBackground();
+
+  testCard.style.opacity = data["card-opacity"];
+  testCard.style.backgroundColor = background;
+  testCardName.style.color = data["card-font-color"];
+  testCard.style.display = "block";
+  testCard.style.height = data["card-height"];
+  testCard.style.width = data["card-width"];
+  testCard.style.borderRadius = data["card-border-radius"];
+
+  if (!data["card-shadow"]) {
+    testCard.style.boxShadow = "none";
+  }
+
+  if (parseInt(data["card-width"].substring(0, 3)) < 150) {
+    testCard.childNodes[1].style.fontSize = "12px";
+  }
+}
+
+function cardBackground() {
+  backgroundOpacity = data["card-background-opacity"];
+  backgroundColor = data["card-background-color"];
+  rgb = hexToRgb(backgroundColor);
+  cssColor = "rgba(" + rgb.r + ", " + rgb.g + ", " + rgb.b + ", " + backgroundOpacity + ")";
+  return cssColor;
 }
 
 function updateData(action) {
@@ -777,7 +802,6 @@ function initSideContainer(type, index) {
     inputURL.parentElement.childNodes[3].classList.add("active");
     previewTitle.innerHTML = title;
     previewImage.src = imageData;
-
   }
 
   function emptyFields() {
@@ -876,6 +900,7 @@ function hideSideContainer() {
 
 function resetSideContainer() {
   document.getElementsByClassName("side-container")[0].innerHTML = originalSideOverlay;
+  updateTestCard();
 }
 
 function refreshCard(index) {
