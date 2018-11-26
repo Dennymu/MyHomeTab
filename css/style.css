@@ -54,7 +54,7 @@ body {
   vertical-align: middle;
 }
 
-.header-float-date, .header-float-time {
+.header-float-weather, .header-float-date, .header-float-time {
   border-radius: 2px;
   font-size: 14px;
   margin-right: 10px;

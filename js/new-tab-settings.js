@@ -93,6 +93,8 @@ var defaultData = {
   "header-background-color": "#fafafa",
   "header-font-color": "#333333",
   "header-float-font-color": "#ffffff",
+  "header-weather-units": "Fahrenheit",
+  "show-weather": true,
   "show-header": false,
   "show-clock": true,
   "time": {
@@ -228,10 +230,13 @@ function getBackgroundOptions() {
 }
 
 function getHeaderOptions() {
+  var fahrenheit = document.getElementById("weather-fahrenheit");
+  var celsius = document.getElementById("weather-celsius");
   var headerBackgroundColor = document.getElementById("header-background-color");
   var headerFontColor = document.getElementById("header-font-color");
   var floatFontColor = document.getElementById("header-float-font-color");
   var header = document.getElementById("show-header");
+  var weather = document.getElementById("show-weather");
   var clock = document.getElementById("show-clock");
   var format = document.getElementById("time-format");
   var weekday = document.getElementById("show-weekday");
@@ -252,6 +257,19 @@ function getHeaderOptions() {
   headerPreview.style.color = data["header-font-colo"];
   floatFontColor.value = data["header-float-font-color"];
 
+  if (data["header-weather-units"] === "Fahrenheit") {
+    fahrenheit.checked = true;
+    headerWeatherPreview.innerHTML = "999°F";
+  }
+
+  if (data["header-weather-units"] === "Celsius") {
+    celsius.checked = true;
+    headerWeatherPreview.innerHTML = "537.2°C";
+  }
+
+  if (data["show-weather"]) {
+    weather.checked = true;
+  }
 
   if (data["show-header"]) {
     header.checked = true;
@@ -398,7 +416,6 @@ function setBackgroundOptions() {
   var image = document.getElementById("background-image");
   var backgroundColorPreview = document.getElementsByClassName("settings-background-preview")[0].childNodes[3];
   var backgroundImagePreview = backgroundColorPreview.childNodes[1];
-  console.log(backgroundImagePreview)
 
   radioColor.addEventListener("change", function() {
     if (radioColor.checked) {
@@ -445,10 +462,13 @@ function setBackgroundOptions() {
 }
 
 function setHeaderOptions() {
+  var fahrenheit = document.getElementById("weather-fahrenheit");
+  var celsius = document.getElementById("weather-celsius");
   var headerBackgroundColor = document.getElementById("header-background-color");
   var headerFontColor = document.getElementById("header-font-color");
   var floatFontColor = document.getElementById("header-float-font-color");
   var header = document.getElementById("show-header");
+  var weather = document.getElementById("show-weather");
   var clock = document.getElementById("show-clock");
   var format = document.getElementById("time-format");
   var weekday = document.getElementById("show-weekday");
@@ -457,6 +477,23 @@ function setHeaderOptions() {
   var year = document.getElementById("show-year");
   var time = document.getElementById("show-time");
   var timeOfDay = document.getElementById("show-timeofday");
+  var headerWeatherPreview = document.getElementsByClassName("header-weather")[0];
+
+  fahrenheit.addEventListener("change", function() {
+    if (fahrenheit.checked) {
+      data["header-weather-units"] = "Fahrenheit";
+      headerWeatherPreview.innerHTML = "999°F";
+      compareData();
+    }
+  });
+
+  celsius.addEventListener("change", function() {
+    if (celsius.checked) {
+      data["header-weather-units"] = "Celsius";
+      headerWeatherPreview.innerHTML = "537.2°C";
+      compareData();
+    }
+  });
 
   headerBackgroundColor.addEventListener("input", function() {
     if ((headerBackgroundColor.value.charAt(0) === "#" && headerBackgroundColor.value.length === 7) || (headerBackgroundColor.value.charAt(0) === "#" && headerBackgroundColor.value.length === 4)) {
@@ -502,6 +539,18 @@ function setHeaderOptions() {
     } else {
       data["show-header"] = false;
       updateHeaderPreview();
+      compareData();
+    }
+  });
+
+  weather.addEventListener("change", function(e) {
+    if (weather.checked) {
+      data["show-weather"] = true;
+      headerWeatherPreview.style.display = "inherit";
+      compareData();
+    } else {
+      data["show-weather"] = false;
+      headerWeatherPreview.style.display = "none";
       compareData();
     }
   });
@@ -604,7 +653,6 @@ function setHeaderOptions() {
 
   function updateHeaderPreview() {
     var headerPreview = document.getElementsByClassName("settings-header-preview")[0];
-    var headerWeatherPreview = document.getElementsByClassName("header-weather")[0];
     var headerRightPreview = document.getElementsByClassName("header-right")[0];
     var headerDatePreview = document.getElementsByClassName("header-date")[0];
     var headerTimePreview = document.getElementsByClassName("header-time")[0];
@@ -838,9 +886,9 @@ function manageData() {
   });
 
   download.addEventListener("click", function(e) {
-    var uriContent = "data:application/octet-stream," + encodeURIComponent(JSON.stringify(data));
+    var uriContent = "data:text/plain," + encodeURIComponent(JSON.stringify(data));
     e.target.href = uriContent;
-    e.target.download = "myhometabdata";
+    e.target.download = "myhometabdata.json";
   });
 
   upload.addEventListener("change", function(e) {
@@ -853,6 +901,7 @@ function manageData() {
       data = uploadData;
       data["card-reset"] = true;
       compareData();
+      upload.value = "";
       alert("Your data has been uploaded.");
     }, false);
 

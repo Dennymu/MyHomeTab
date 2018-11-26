@@ -97,8 +97,10 @@ var defaultData = {
   "header-background-color": "#fafafa",
   "header-font-color": "#333333",
   "header-float-font-color": "#ffffff",
+  "header-weather-units": "Fahrenheit",
   "show-header": false,
   "show-clock": true,
+  "show-weather": true,
   "time": {
     "timeFormat": "12",
     "show-weekday": true,
@@ -204,6 +206,14 @@ function validateData() {
     data["card-shadow"] = false;
   }
 
+  if (data["header-weather-units"] === undefined) {
+    data["header-weather-units"] = "Fahrenheit";
+  }
+
+  if (data["show-weather"] === undefined) {
+    data["show-weather"] = true;
+  }
+
   setData();
 }
 
@@ -252,6 +262,10 @@ function hasHeader() {
     loader.style.top = "0px";
     floatInfo.addEventListener("click", initLightBox);
     hasClock(dateHeader, timeHeader);
+  }
+
+  if (data["show-weather"]) {
+    getLocation();
   }
 }
 
@@ -910,4 +924,46 @@ function refreshCard(index) {
   card.childNodes[0].href = data["cards"][index - 1]["url"];
   card.childNodes[0].childNodes[0].childNodes[0].src = data["cards"][index - 1]["icon"];
   card.childNodes[0].childNodes[0].childNodes[1].innerHTML = data["cards"][index - 1]["name"];
+}
+
+function getLocation() {
+  if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (p) {
+          getWeather(p.coords.latitude, p.coords.longitude);
+        });
+    } else {
+        console.log("Location not available");
+    }
+}
+
+function getWeather(lat, lon) {
+  var url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=imperial&APPID=9fe397f7ea57307ce1add4c7660c3a5d";
+  var xhr = new XMLHttpRequest();
+
+  xhr.addEventListener("load", function() {
+    var weatherData = JSON.parse(xhr.responseText);
+    showWeather(weatherData);
+  });
+
+  xhr.open("GET", url);
+  xhr.send();
+}
+
+function showWeather(weatherData) {
+  var weather = document.getElementsByClassName("header-weather")[0];
+  var floatWeather = document.getElementsByClassName("header-float-weather")[0];
+  console.log(weatherData);
+
+  if (data["header-weather-units"] === "Fahrenheit") {
+    weather.innerHTML = Math.round(weatherData.main.temp) + "°F";
+    floatWeather.innerHTML = Math.round(weatherData.main.temp) + "°F";
+  } else {
+    weather.innerHTML = Math.round((5 / 9)  * (weatherData.main.temp - 32)) + "°C";
+    floatWeather.innerHTML = Math.round((5 / 9)  * (weatherData.main.temp - 32)) + "°C";
+  }
+
+  if (!data["show-weather"]) {
+    weather.style.display = "none";
+    floatWeather.style.display = "none";
+  }
 }

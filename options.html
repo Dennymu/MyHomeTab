@@ -78,7 +78,7 @@
     <div class="settings-form">
       Preview
       <div class="settings-header-preview">
-        <span class="header-weather"></span>
+        <span class="header-weather">999°F</span>
         <div class="header-right">
           <span class="header-date">Wednesday, March 3, 2018</span>
           <span class="header-time">12:00:00</span>
@@ -92,6 +92,11 @@
         <label>
           <input id="show-header" type="checkbox" class="filled-in" />
           <span>Show Header</span>
+        </label>
+        <br>
+        <label>
+          <input id="show-weather" type="checkbox" class="filled-in" />
+          <span>Show Weather</span>
         </label>
         <br>
         <label>
@@ -135,6 +140,17 @@
         </label>
       </div>
       <div class="settings-right">
+        <div class="center-align">
+          <label style="margin-right: 10px;">
+            <input id="weather-fahrenheit" class="with-gap" name="weather-units" type="radio" />
+            <span>Fahrenheit</span>
+          </label>
+          <label>
+            <input id="weather-celsius" class="with-gap" name="weather-units" type="radio"  />
+            <span>Celsius</span>
+          </label>
+        </div>
+        <br>
         <div class="input-field col s6">
           <input placeholder="" id="header-background-color" type="text" class="validate">
           <label for="background-color">Header Background Color - Hex Code</label>
