@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "MyHomeTab",
-  "version": "0.5",
+  "version": "0.7",
   "description": "A customizable new tab page.",
   "icons": {
     "16": "images/my_home_tab_icon16.png",
@@ -14,6 +14,7 @@
   },
   "options_page": "options.html",
   "permissions": [
+    "geolocation",
     "storage"
   ]
 }
