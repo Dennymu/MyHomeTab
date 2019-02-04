@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "MyHomeTab",
-  "version": "0.7",
+  "version": "0.8",
   "description": "A customizable new tab page.",
   "icons": {
     "16": "images/my_home_tab_icon16.png",

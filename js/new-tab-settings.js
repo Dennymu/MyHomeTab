@@ -385,12 +385,12 @@ function initNavigation() {
         nav[currentSection].style.borderBottom = "2px solid #0394D6";
         sections[nextSection].classList.add("slide-in-left-settings");
         sections[nextSection].style.display = "block";
-        nav[nextSection].style.borderBottom = "2px solid #ffffff";
+        nav[nextSection].style.borderBottom = "3px solid #ffffff";
         setTimeout(function() {
           sections[nextSection].classList.remove("slide-in-left-settings");
           currentSection = nextSection;
-        }, 100);
-      }, 100);
+        }, 50);
+      }, 50);
     } else {
       sections[currentSection].classList.add("slide-out-left-settings");
       setTimeout(function() {
@@ -399,12 +399,12 @@ function initNavigation() {
         nav[currentSection].style.borderBottom = "2px solid #0394D6";
         sections[nextSection].classList.add("slide-in-right-settings");
         sections[nextSection].style.display = "block";
-        nav[nextSection].style.borderBottom = "2px solid #ffffff";
+        nav[nextSection].style.borderBottom = "3px solid #ffffff";
         setTimeout(function() {
           sections[nextSection].classList.remove("slide-in-right-settings");
           currentSection = nextSection;
-        }, 100);
-      }, 100);
+        }, 50);
+      }, 50);
     }
   }
 }
