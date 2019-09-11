@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "MyHomeTab",
-  "version": "0.8",
+  "version": "1.0",
   "description": "A customizable new tab page.",
   "icons": {
     "16": "images/my_home_tab_icon16.png",
@@ -10,7 +10,7 @@
   },
   "incognito": "spanning",
   "chrome_url_overrides": {
-    "newtab": "my_home_tab.html"
+    "newtab": "index.html"
   },
   "options_page": "options.html",
   "permissions": [
