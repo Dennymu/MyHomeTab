@@ -1,13 +1,13 @@
 // Importing react related
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Importing mantine
 import { Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 // Importing store
-import { selectGlobals } from '../store/Globals';
+import { selectGlobals, setGlobals } from '../store/Globals';
 
 // Importing ours
 import { AddShortcutModal, SettingsModal } from '../components';
@@ -16,6 +16,9 @@ import { AddShortcutModal, SettingsModal } from '../components';
 let clockInterval: string | number | NodeJS.Timeout | undefined;
 
 function Header() {
+  // Required
+  const dispatch = useDispatch();
+
   // Store
   const globals = useSelector(selectGlobals);
 
@@ -33,13 +36,21 @@ function Header() {
   // Get location/weather on first render
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (p) {
-        getWeather(p.coords.latitude, p.coords.longitude);
-      });
+      navigator.geolocation.getCurrentPosition(
+        (p) => {
+          getWeather(p.coords.latitude, p.coords.longitude);
+        },
+        () => {
+          console.error('Location access not supported');
+          setShowWeather(false);
+          dispatch(setGlobals({ weather_show: false }));
+        }
+      );
       setShowWeather(true);
     } else {
-      console.error('Location access has been denied');
+      console.error('Location access not supported');
       setShowWeather(false);
+      dispatch(setGlobals({ weather_show: false }));
     }
 
     function getWeather(lat: number, lon: number) {
