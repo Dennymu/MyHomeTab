@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 20px;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 100vh;
+  background: #eee;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #9cc3d2;
+  border-radius: 100vh;
+  border: 2px solid #9cc3d2;
+  transition: 0.2s ease-out background;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #b8d6e1;
+  border-color: #b8d6e1;
+}
+
+.mantine-InputWrapper-root {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mantine-InputWrapper-root label {
+  color: #212121;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.mantine-Switch-input {
+  cursor: pointer;
+}
+
+.mantine-RadioGroup-root.flex-row > div {
+  display: flex;
+  flex-direction: row;
+}
