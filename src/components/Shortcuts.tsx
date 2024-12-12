@@ -1,9 +1,9 @@
 // Importing react related
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Importing store
-import { selectGlobals } from "../store/Globals";
+import { selectGlobals } from '../store/Globals';
 
 function Shortcuts() {
   // Required
@@ -21,17 +21,21 @@ function Shortcuts() {
 
   const renderShortcuts = () => {
     return shortcuts.map((s, i) => {
-      const imgUrl = s.icon || "images/shortcut_icon.png";
+      const imgUrl = s.icon || 'images/shortcut_icon.png';
 
       return (
-        <a href={s.url} className="flex m-4" key={i}>
+        <a
+          href={s.url}
+          className="flex m-4 hover:pb-1 hover:mt-3 transition-all"
+          key={i}
+        >
           <div>
             <div className="flex justify-center">
               <img src={imgUrl} alt={`${s.name} logo`} className="h-14 w-14" />
             </div>
             {globals.shortcuts_show_name && (
-              <div className="text-center mt-2 text-white tracking-wider">
-                {s.name || ""}
+              <div className="text-center mt-2 text-white tracking-wider drop-shadow">
+                {s.name || ''}
               </div>
             )}
           </div>
