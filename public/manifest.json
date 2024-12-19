@@ -17,6 +17,6 @@
   },
   "manifest_version": 3,
   "name": "MyHomeTab",
-  "permissions": ["activeTab", "geolocation", "scripting", "storage"],
-  "version": "2.1"
+  "permissions": ["geolocation", "storage"],
+  "version": "3.1"
 }
