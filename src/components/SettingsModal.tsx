@@ -1,6 +1,6 @@
 // Importing react related
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 // Importing mantine
 import {
@@ -11,9 +11,9 @@ import {
   FileInput,
   Accordion,
   Button,
-} from '@mantine/core';
-import { useInputState } from '@mantine/hooks';
-import { notifications } from '@mantine/notifications';
+} from "@mantine/core";
+import { useInputState } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 
 // Importing store
 import {
@@ -21,7 +21,7 @@ import {
   setGlobals,
   unsetGlobals,
   unsetShortcuts,
-} from '../store/Globals';
+} from "../store/Globals";
 
 type Props = {
   onClose: () => void;
@@ -42,6 +42,8 @@ const SettingsModal = ({ onClose }: Props) => {
     globals.background_image
   );
   const [showClock, setShowClock] = useState(globals.clock_show);
+  const [showDate, setShowDate] = useState(globals.clock_show_date);
+  const [showTime, setShowTime] = useState(globals.clock_show_time);
   const [clockFormat, setClockFormat] = useState(globals.clock_format);
   const [showWeather, setShowWeather] = useState(globals.weather_show);
   const [weatherUnit, setWeatherUnit] = useState(globals.weather_unit);
@@ -91,9 +93,9 @@ const SettingsModal = ({ onClose }: Props) => {
                   onChange={(file) => {
                     if (!file) {
                       notifications.show({
-                        color: 'red',
-                        title: 'Error',
-                        message: 'No file found',
+                        color: "red",
+                        title: "Error",
+                        message: "No file found",
                       });
                       return;
                     }
@@ -102,16 +104,16 @@ const SettingsModal = ({ onClose }: Props) => {
                     reader.readAsDataURL(file);
                     reader.onload = () => {
                       console.log(typeof reader.result);
-                      if (typeof reader.result === 'string') {
+                      if (typeof reader.result === "string") {
                         const result = reader.result;
                         const encoder = new TextEncoder();
                         const resultSize = encoder.encode(result).length;
 
                         if (resultSize > 4000000) {
                           notifications.show({
-                            color: 'red',
-                            title: 'Error',
-                            message: 'Image too large',
+                            color: "red",
+                            title: "Error",
+                            message: "Image too large",
                           });
                           return;
                         }
@@ -143,7 +145,7 @@ const SettingsModal = ({ onClose }: Props) => {
                         : undefined,
                     }}
                   >
-                    {!backgroundImage && 'N/A'}
+                    {!backgroundImage && "N/A"}
                   </div>
                 </div>
               </div>
@@ -167,6 +169,24 @@ const SettingsModal = ({ onClose }: Props) => {
                     onChange={() => {
                       dispatch(setGlobals({ clock_show: !showClock }));
                       setShowClock(!showClock);
+                    }}
+                  />
+                </Input.Wrapper>
+                <Input.Wrapper label="Display date" className="mb-4">
+                  <Switch
+                    checked={showDate}
+                    onChange={() => {
+                      dispatch(setGlobals({ clock_show_date: !showDate }));
+                      setShowDate(!showDate);
+                    }}
+                  />
+                </Input.Wrapper>
+                <Input.Wrapper label="Display time" className="mb-4">
+                  <Switch
+                    checked={showTime}
+                    onChange={() => {
+                      dispatch(setGlobals({ clock_show_time: !showTime }));
+                      setShowTime(!showTime);
                     }}
                   />
                 </Input.Wrapper>

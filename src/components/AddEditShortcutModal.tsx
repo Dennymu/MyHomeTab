@@ -1,20 +1,24 @@
 // Importing react related
-import { ChangeEvent, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { ChangeEvent, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 // Importing mantine
-import { Input, Button, FileInput, Switch, Accordion } from '@mantine/core';
-import { useInputState } from '@mantine/hooks';
-import { notifications } from '@mantine/notifications';
+import { Input, Button, FileInput, Switch, Accordion } from "@mantine/core";
+import { useInputState } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 
 // Importing store
-import { selectGlobals, setGlobals } from '../store/Globals';
+import { selectGlobals, setGlobals } from "../store/Globals";
+
+// Importing others
+import _ from "lodash";
 
 type Props = {
   onClose: () => void;
+  index?: number;
 };
 
-const AddShortcutModal = ({ onClose }: Props) => {
+const AddEditShortcutModal = ({ onClose }: Props) => {
   // Required
   const dispatch = useDispatch();
 
@@ -23,11 +27,19 @@ const AddShortcutModal = ({ onClose }: Props) => {
 
   // State
   const [shortcuts, setShortcuts] = useState([...globals.shortcuts]);
-  const [image, setImage] = useState('images/shortcut_icon.png');
-  const [retrievedImage, setRetrievedImage] = useState('');
-  const [name, setName] = useInputState('');
-  const [url, setUrl] = useInputState('');
+  const [image, setImage] = useState("images/shortcut_icon.png");
+  const [retrievedImage, setRetrievedImage] = useState("");
+  const [name, setName] = useInputState("");
+  const [url, setUrl] = useInputState("");
   const [useUploadImagePreview, setUseUploadImagePreview] = useState(false);
+
+  useEffect(() => {
+    if (typeof globals.shortcuts_active_index === "number") {
+      setName(shortcuts[globals.shortcuts_active_index].name);
+      setRetrievedImage(shortcuts[globals.shortcuts_active_index].icon);
+      setUrl(shortcuts[globals.shortcuts_active_index].url);
+    }
+  }, [globals.shortcuts_active_index]);
 
   const onClickAddShortcut = () => {
     // Add shortcut to shortcuts list and dispatch to global, also hide
@@ -36,11 +48,30 @@ const AddShortcutModal = ({ onClose }: Props) => {
     tempShortcuts.push({
       url: url,
       name: name,
-      icon: useUploadImagePreview && image ? image : retrievedImage || '',
+      icon: useUploadImagePreview && image ? image : retrievedImage || "",
+      id: tempShortcuts.length.toString(),
     });
 
     setShortcuts(tempShortcuts);
     dispatch(setGlobals({ shortcuts: tempShortcuts }));
+    onClose();
+  };
+
+  const onClickSaveShortcut = () => {
+    // Save edited opened shortcut
+    const tempShortcuts = _.cloneDeep(shortcuts);
+
+    if (typeof globals.shortcuts_active_index === "number") {
+      tempShortcuts[globals.shortcuts_active_index].name = name;
+      tempShortcuts[globals.shortcuts_active_index].url = url;
+      tempShortcuts[globals.shortcuts_active_index].icon =
+        useUploadImagePreview && image ? image : retrievedImage || "";
+    }
+
+    setShortcuts(tempShortcuts);
+    dispatch(
+      setGlobals({ shortcuts: tempShortcuts, shortcuts_show_edit: false })
+    );
     onClose();
   };
 
@@ -50,7 +81,7 @@ const AddShortcutModal = ({ onClose }: Props) => {
 
     // Check the url for a favicon and try to load it
     if (!isValidUrl(val)) {
-      setRetrievedImage('');
+      setRetrievedImage("");
       return;
     }
 
@@ -64,12 +95,12 @@ const AddShortcutModal = ({ onClose }: Props) => {
 
       newImage.onerror = () => {
         console.warn(`Retrieved image doesn't exist: ${imageUrl}`);
-        setRetrievedImage('');
+        setRetrievedImage("");
       };
 
       newImage.src = imageUrl;
     } catch (err) {
-      console.warn('Unable to get image, err:', err);
+      console.warn("Unable to get image, err:", err);
     }
   };
 
@@ -108,9 +139,9 @@ const AddShortcutModal = ({ onClose }: Props) => {
                   onChange={(file) => {
                     if (!file) {
                       notifications.show({
-                        color: 'red',
-                        title: 'Error',
-                        message: 'No file found',
+                        color: "red",
+                        title: "Error",
+                        message: "No file found",
                       });
                       return;
                     }
@@ -119,16 +150,16 @@ const AddShortcutModal = ({ onClose }: Props) => {
                     reader.readAsDataURL(file);
                     reader.onload = () => {
                       console.log(typeof reader.result);
-                      if (typeof reader.result === 'string') {
+                      if (typeof reader.result === "string") {
                         const result = reader.result;
                         const encoder = new TextEncoder();
                         const resultSize = encoder.encode(result).length;
 
                         if (resultSize > 500000) {
                           notifications.show({
-                            color: 'red',
-                            title: 'Error',
-                            message: 'Image too large',
+                            color: "red",
+                            title: "Error",
+                            message: "Image too large",
                           });
                           return;
                         }
@@ -159,7 +190,7 @@ const AddShortcutModal = ({ onClose }: Props) => {
                       backgroundImage: image ? `url('${image}')` : undefined,
                     }}
                   >
-                    {!image && 'N/A'}
+                    {!image && "N/A"}
                   </div>
                 </div>
               </div>
@@ -180,14 +211,26 @@ const AddShortcutModal = ({ onClose }: Props) => {
         </Accordion>
       </div>
       <div className="flex justify-end mt-10">
-        <Button
-          className="flex items-center w-fit"
-          radius="xl"
-          onClick={onClickAddShortcut}
-        >
-          <span className="material-symbols-outlined text-sm mr-1">add</span>
-          Add shortcut
-        </Button>
+        {typeof globals.shortcuts_active_index !== "number" && (
+          <Button
+            className="flex items-center w-fit"
+            radius="xl"
+            onClick={onClickAddShortcut}
+          >
+            <span className="material-symbols-outlined text-sm mr-1">add</span>
+            Add shortcut
+          </Button>
+        )}
+        {typeof globals.shortcuts_active_index === "number" && (
+          <Button
+            className="flex items-center w-fit"
+            radius="xl"
+            onClick={onClickSaveShortcut}
+          >
+            <span className="material-symbols-outlined text-sm mr-1">save</span>
+            Save shortcut
+          </Button>
+        )}
       </div>
     </div>
   );
@@ -198,12 +241,12 @@ function isValidUrl(s: string) {
 
   try {
     url = new URL(s);
-    console.log('Url:', url);
+    console.log("Url:", url);
     return true;
   } catch (err: unknown) {
-    console.warn('Invalid url:', s, 'err:', err);
+    console.warn("Invalid url:", s, "err:", err);
     return false;
   }
 }
 
-export default AddShortcutModal;
+export default AddEditShortcutModal;

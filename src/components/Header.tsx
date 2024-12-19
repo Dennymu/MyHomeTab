@@ -1,16 +1,16 @@
 // Importing react related
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 // Importing mantine
-import { Modal } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { Modal } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 
 // Importing store
-import { selectGlobals, setGlobals } from '../store/Globals';
+import { selectGlobals, setGlobals } from "../store/Globals";
 
 // Importing ours
-import { AddShortcutModal, SettingsModal } from '../components';
+import { AddEditShortcutModal, SettingsModal } from "../components";
 
 // Variables
 let clockInterval: string | number | NodeJS.Timeout | undefined;
@@ -23,14 +23,14 @@ function Header() {
   const globals = useSelector(selectGlobals);
 
   // States
-  const [weatherIcon, setWeatherIcon] = useState('sunny');
-  const [weatherTitle, setWeatherTitle] = useState('Sunny');
+  const [weatherIcon, setWeatherIcon] = useState("sunny");
+  const [weatherTitle, setWeatherTitle] = useState("Sunny");
   const [temperature, setTemperature] = useState(72);
-  const [temperatureSymbol, setTemperatureSymbol] = useState('F');
-  const [weatherLink, setWeatherLink] = useState('https://www.weather.com');
+  const [temperatureSymbol, setTemperatureSymbol] = useState("F");
+  const [weatherLink, setWeatherLink] = useState("https://www.weather.com");
   const [showWeather, setShowWeather] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
-  const [modalType, setModalType] = useState('settings');
+  const [modalType, setModalType] = useState("settings");
   const [date, setDate] = useState(new Date());
 
   // Get location/weather on first render
@@ -41,14 +41,14 @@ function Header() {
           getWeather(p.coords.latitude, p.coords.longitude);
         },
         () => {
-          console.error('Location access not supported');
+          console.error("Location access not supported");
           setShowWeather(false);
           dispatch(setGlobals({ weather_show: false }));
         }
       );
       setShowWeather(true);
     } else {
-      console.error('Location access not supported');
+      console.error("Location access not supported");
       setShowWeather(false);
       dispatch(setGlobals({ weather_show: false }));
     }
@@ -57,61 +57,61 @@ function Header() {
       const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&APPID=9fe397f7ea57307ce1add4c7660c3a5d`;
       const xhr = new XMLHttpRequest();
 
-      xhr.addEventListener('load', function () {
+      xhr.addEventListener("load", function () {
         const weatherData = JSON.parse(xhr.responseText);
         const currentTime = new Date();
         const sunset = new Date(weatherData?.sys?.sunset * 1000);
         const sunrise = new Date(weatherData?.sys?.sunrise * 1000);
-        const weather = weatherData?.weather?.[0]?.main || 'Clear';
+        const weather = weatherData?.weather?.[0]?.main || "Clear";
         const temp = weatherData?.main?.temp;
         let adjustedTemp = temp || temp === 0 ? Math.round(temp) : 72;
 
-        if (temperatureSymbol === 'C') {
+        if (temperatureSymbol === "C") {
           adjustedTemp = Math.floor((adjustedTemp - 32) * (5 / 9));
         }
 
         setTemperature(adjustedTemp);
         setWeatherTitle(weather);
 
-        if (weather === 'Clear') {
+        if (weather === "Clear") {
           if (sunset < currentTime || sunrise > currentTime) {
-            setWeatherIcon('bedtime');
+            setWeatherIcon("bedtime");
           } else {
-            setWeatherIcon('sunny');
+            setWeatherIcon("sunny");
           }
-        } else if (weather === 'Rain' || weather === 'Drizzle') {
-          setWeatherIcon('rainy');
-        } else if (weather === 'Snow') {
-          setWeatherIcon('weather_snowy');
-        } else if (weather === 'Clouds') {
-          setWeatherIcon('cloud');
-        } else if (weather === 'Thunderstorm') {
-          setWeatherIcon('thunderstorm');
+        } else if (weather === "Rain" || weather === "Drizzle") {
+          setWeatherIcon("rainy");
+        } else if (weather === "Snow") {
+          setWeatherIcon("weather_snowy");
+        } else if (weather === "Clouds") {
+          setWeatherIcon("cloud");
+        } else if (weather === "Thunderstorm") {
+          setWeatherIcon("thunderstorm");
         } else if (
-          weather === 'Mist' ||
-          weather === 'Smoke' ||
-          weather === 'Haze' ||
-          weather === 'Dust' ||
-          weather === 'Fog' ||
-          weather === 'Sand' ||
-          weather === 'Dust'
+          weather === "Mist" ||
+          weather === "Smoke" ||
+          weather === "Haze" ||
+          weather === "Dust" ||
+          weather === "Fog" ||
+          weather === "Sand" ||
+          weather === "Dust"
         ) {
-          setWeatherIcon('mist');
-        } else if (weather === 'Ash') {
-          setWeatherIcon('volcano');
-        } else if (weather === 'Squall' || weather === 'Tornado') {
-          setWeatherIcon('tornado');
+          setWeatherIcon("mist");
+        } else if (weather === "Ash") {
+          setWeatherIcon("volcano");
+        } else if (weather === "Squall" || weather === "Tornado") {
+          setWeatherIcon("tornado");
         } else {
           if (sunset < currentTime || sunrise > currentTime) {
-            setWeatherIcon('bedtime');
+            setWeatherIcon("bedtime");
           } else {
-            setWeatherIcon('sunny');
+            setWeatherIcon("sunny");
           }
-          setWeatherTitle('Clear');
+          setWeatherTitle("Clear");
         }
       });
 
-      xhr.open('GET', url);
+      xhr.open("GET", url);
       xhr.send();
     }
   }, [temperatureSymbol]);
@@ -137,18 +137,25 @@ function Header() {
     }
   }, [globals, temperatureSymbol, weatherLink]);
 
+  useEffect(() => {
+    if (globals.shortcuts_open_modal) {
+      setModalType(globals.modal_type);
+      open();
+    }
+  }, [globals.shortcuts_open_modal]);
+
   const onClickSettings = () => {
-    setModalType('settings');
+    setModalType("settings");
     open();
   };
 
   const onClickAddShortcut = () => {
-    setModalType('addShortcut');
+    setModalType("addEditShortcut");
     open();
   };
 
   const onClickEditShortcuts = () => {
-    console.log('Edit shortcuts');
+    dispatch(setGlobals({ shortcuts_show_edit: !globals.shortcuts_show_edit }));
   };
 
   return (
@@ -158,8 +165,8 @@ function Header() {
           {globals.weather_show && (
             <a href={weatherLink} target="_blank" rel="noopener noreferrer">
               <div
-                className={`flex items-center text-white hover:text-green-100 transition-colors cursor-pointer font-semibold text-xl ${
-                  showWeather ? 'visible' : 'invisible'
+                className={`flex items-center text-white hover:text-green-100 transition-colors cursor-pointer font-semibold text-xl tracking-wider ${
+                  showWeather ? "visible" : "invisible"
                 }`}
                 title={weatherTitle}
               >
@@ -175,19 +182,19 @@ function Header() {
         </div>
         <div>
           {globals.clock_show && (
-            <div className="text-white text-lg drop-shadow">
+            <div className="text-white text-lg drop-shadow tracking-wider">
               {date
                 .toLocaleString(undefined, {
-                  weekday: 'long',
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                  hour12: globals.clock_format === '12',
-                  hour: 'numeric',
-                  minute: 'numeric',
-                  second: 'numeric',
+                  weekday: globals.clock_show_date ? "long" : undefined,
+                  year: globals.clock_show_date ? "numeric" : undefined,
+                  month: globals.clock_show_date ? "long" : undefined,
+                  day: globals.clock_show_date ? "numeric" : undefined,
+                  hour12: globals.clock_format === "12",
+                  hour: globals.clock_show_time ? "numeric" : undefined,
+                  minute: globals.clock_show_time ? "numeric" : undefined,
+                  second: globals.clock_show_time ? "numeric" : undefined,
                 })
-                .replace('at', '')}
+                .replace("at", "")}
             </div>
           )}
         </div>
@@ -219,17 +226,37 @@ function Header() {
       </div>
       <Modal
         opened={opened}
-        onClose={close}
+        onClose={() => {
+          close();
+          dispatch(
+            setGlobals({
+              shortcuts_active_index: null,
+              shortcuts_open_modal: false,
+            })
+          );
+        }}
         title={
           <div className="font-semibold text-text tracking-wider">
-            {modalType === 'settings' ? 'Settings' : 'Add shortcut'}
+            {modalType === "settings" ? "Settings" : "Add shortcut"}
           </div>
         }
         centered
-        size={`${modalType === 'settings' ? 'lg' : 'sm'}`}
+        size={`${modalType === "settings" ? "lg" : "sm"}`}
       >
-        {modalType === 'settings' && <SettingsModal onClose={close} />}
-        {modalType === 'addShortcut' && <AddShortcutModal onClose={close} />}
+        {modalType === "settings" && <SettingsModal onClose={close} />}
+        {modalType === "addEditShortcut" && (
+          <AddEditShortcutModal
+            onClose={() => {
+              close();
+              dispatch(
+                setGlobals({
+                  shortcuts_active_index: null,
+                  shortcuts_open_modal: false,
+                })
+              );
+            }}
+          />
+        )}
       </Modal>
     </div>
   );
